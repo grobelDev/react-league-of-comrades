@@ -1,29 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // function buttonPress() {
 //   console.log('button was pressed');
 // }
 
-async function pingServer() {
-  // // let serverUrl = 'https://server-nch7pipeyq-uc.a.run.app';
-  // let serverUrl2 = 'http://localhost:8080';
-  // let response = await fetch(serverUrl2);
-  // // response.json();
-  // if (response.ok) {
-  //   // const _response = await response.json();
-  //   console.log(response);
-  //   // return response2.accountId;
-
-  fetch('https://server-nch7pipeyq-uc.a.run.app')
-    .then(response => {
-      return response.json();
-    })
-    .then(myJson => {
-      console.log(myJson);
-    });
-}
-
 export default function App() {
+  const [response, setResponse] = useState('');
+
+  let url = 'https://server-nch7pipeyq-uc.a.run.app';
+  let testUrl = 'http://localhost:8080';
+
+  async function pingServer() {
+    fetch(testUrl)
+      .then(response => {
+        return response.json();
+      })
+      .then(myJson => {
+        console.log(myJson);
+        setResponse(JSON.stringify(myJson));
+      });
+  }
+
   return (
     <div>
       <div className='text-4xl font-bold text-center text-blue-500'>
@@ -37,6 +34,7 @@ export default function App() {
           Ping Server
         </button>
       </div>
+      <div className='flex justify-center'>{response}</div>
     </div>
   );
 }
