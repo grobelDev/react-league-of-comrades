@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const StyledEmail = styled.div`
-  padding: 0.75rem;
+  padding: 1rem;
   display: flex;
   align-items: center;
   h3 {

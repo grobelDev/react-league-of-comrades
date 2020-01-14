@@ -1,42 +1,4 @@
-// import React, { useState } from 'react';
-
-// export default function App() {
-//   const [response, setResponse] = useState('');
-
-//   let url = 'https://server-nch7pipeyq-uc.a.run.app';
-//   let testUrl = 'http://localhost:8080';
-
-//   async function pingServer() {
-//     fetch(testUrl)
-//       .then(response => {
-//         return response.json();
-//       })
-//       .then(myJson => {
-//         console.log(myJson);
-//         setResponse(JSON.stringify(myJson));
-//       });
-//   }
-
-//   return (
-//     <div>
-//       <div className='p-2 text-4xl font-bold text-center text-blue-500'>
-//         League of Comrades
-//       </div>
-//       <div className='p-2'></div>
-//       <div className='flex justify-center'>
-//         <button
-//           className='px-4 py-2 font-normal text-white bg-blue-500 rounded hover:bg-blue-700'
-//           onClick={() => pingServer()}
-//         >
-//           Ping Server
-//         </button>
-//       </div>
-//       <div className='flex justify-center p-2'>{response}</div>
-//     </div>
-//   );
-// }
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import styled from 'styled-components';
 // import GlobalStyle from "./GlobalStyle"
@@ -109,11 +71,14 @@ const CustomHeader = () => {
               <div className='w-full lg:px-6 xl:w-3/4 xl:px-12'>
                 <div className='relative'>
                   <div>
-                    <input className='block w-full py-2 pl-10 pr-4 leading-normal placeholder-gray-600 bg-gray-200 border border-transparent rounded-lg appearance-none transition focus:outline-0 focus:bg-white focus:border-gray-300 ds-input'></input>
+                    <input
+                      className='block w-full py-2 pl-10 pr-4 leading-normal placeholder-gray-600 bg-gray-200 border border-transparent rounded-lg appearance-none transition focus:outline-0 focus:bg-white focus:border-gray-300 ds-input'
+                      placeholder='Search Summoner'
+                    ></input>
                   </div>
                   <div className='absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none'>
                     <svg
-                      class='fill-current pointer-events-none text-gray-600 w-4 h-4'
+                      className='w-4 h-4 text-gray-600 pointer-events-none fill-current'
                       xmlns='http://www.w3.org/2000/svg'
                       viewBox='0 0 20 20'
                     >
@@ -126,10 +91,10 @@ const CustomHeader = () => {
             <button
               type='button'
               id='sidebar-open'
-              class='flex px-6 items-center lg:hidden text-gray-500 focus:outline-none focus:text-gray-700'
+              className='flex items-center px-6 text-gray-500 lg:hidden focus:outline-none focus:text-gray-700'
             >
               <svg
-                class='fill-current w-4 h-4'
+                className='w-4 h-4 fill-current'
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 20 20'
               >
@@ -144,9 +109,34 @@ const CustomHeader = () => {
 };
 
 function App() {
+  // const [response, setResponse] = useState('');
+
+  // let url = 'https://server-nch7pipeyq-uc.a.run.app';
+  // let testUrl = 'http://localhost:8080';
+
+  // async function pingServer() {
+  //   fetch(testUrl)
+  //     .then(response => {
+  //       return response.json();
+  //     })
+  //     .then(myJson => {
+  //       console.log(myJson);
+  //       setResponse(JSON.stringify(myJson));
+  //     });
+  // }
+
+  // if (!response) {
+  //   // pingServer();
+  // }
+
   return (
     <div>
       <MobileWarning />
+
+      {/* <div> */}
+      {/* TestFetch Results: */}
+      {/* {response ? <div>{response}</div> : <div>Getting Data</div>} */}
+      {/* </div> */}
       <Router>
         {/* <GlobalStyle /> */}
         <Switch>

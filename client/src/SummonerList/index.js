@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 import { StyledCollapseHandler } from './styled-components';
@@ -7,7 +7,7 @@ const StyledEmailList = styled.ul``;
 
 const messageIds = [...new Array(80).keys()];
 
-const emails = [
+const emailsPlaceholder = [
   {
     avatar: 'F',
     title: 'Faker',
@@ -49,6 +49,51 @@ const emails = [
 const exitDuration = 250;
 
 const Demo = () => {
+  const [emails, setEmails] = useState(emailsPlaceholder);
+  const [response, setResponse] = useState(null);
+
+  let url = 'https://server-nch7pipeyq-uc.a.run.app';
+  let testUrl = 'http://localhost:8080';
+
+  async function pingServer() {
+    fetch(testUrl)
+      .then(response => {
+        return response.json();
+      })
+      .then(myJson => {
+        // console.log(myJson);
+        setResponse(myJson);
+      });
+  }
+
+  if (!response) {
+    pingServer();
+  } else if (emails === emailsPlaceholder) {
+    // console.log(response);
+
+    let emails2 = [];
+
+    response.forEach((player, index) => {
+      let message = `Played together ${player.frequency} times.`;
+      let avatar = player.name[0];
+      let id = index + 1;
+
+      let playerObject = {
+        title: player.name,
+        message: message,
+        avatar: avatar,
+        id: id
+      };
+      emails2.push(playerObject);
+    });
+    setEmails(emails2);
+    // let playerResult = response.forEach(player => ({
+    // ...player
+    // }));
+    // console.log(playerResult);
+  }
+
+  // NON-CUSTOM CODE
   const [emailIds, setEmailIds] = React.useState(messageIds);
   const [deletingId, setDeletingId] = React.useState();
   const listRef = React.useRef(null);
