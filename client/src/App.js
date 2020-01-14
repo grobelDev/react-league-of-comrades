@@ -68,7 +68,7 @@ const CustomHeader = () => {
               </div>
             </div>
             <div className='flex flex-grow bg-gray lg:w-3/4 xl:w-4/5'>
-              <div className='w-full lg:px-6 xl:w-3/4 xl:px-12'>
+              <div className='w-full'>
                 <div className='relative'>
                   <div>
                     <input
