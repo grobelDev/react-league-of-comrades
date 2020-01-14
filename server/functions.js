@@ -14,19 +14,9 @@ async function main(summonerName, region) {
     .map(match => match.gameId);
   let matchIdArray = await getMatchIdsByMatchlist(smallMatchListIds, region);
 
-  let summonerArray = getFinalSummonerArray(matchIdArray);
-  let finalSummonerArray = summonerArray.filter(
-    summoner => summoner.name.toLowerCase() !== summonerName.toLowerCase()
-  );
-  let currentPatch = await getCurrentPatchV2();
-  finalSummonerArray.forEach(summoner => {
-    summoner.profileIconSrc = getProfileIconImageURL(
-      currentPatch,
-      summoner.profileIcon
-    );
-  });
+  let summonerArray = organizePlayerObject(matchIdArray);
 
-  return finalSummonerArray;
+  return summonerArray;
 }
 
 // 1.0: - INITIAL API CALLS
@@ -209,6 +199,47 @@ function getChampionImageURLV2(currentPatch, championName) {
   let baseURL = `http://ddragon.leagueoflegends.com/cdn/${currentPatch}/img/champion/${championName}.png`;
 
   return baseURL;
+}
+
+// 3.6 - Returns final Player Object from the matchIdArray
+function organizePlayerObject(matchIdArray) {
+  // Get every match with our Summoner.
+  let result = [];
+
+  for (let i = 0; i < matchIdArray.length; i++) {
+    let match = matchIdArray[i];
+    let participants = match.participantIdentities;
+
+    for (let j = 0; j < participants.length; j++) {
+      let participant = participants[j];
+      let summonerName = participant.player.summonerName;
+
+      // Check if summoner is already in result...
+      let summonerIndex = result.findIndex(
+        summoner => summoner.name === summonerName
+      );
+
+      if (summonerIndex === -1) {
+        let matches = [];
+        matches.push(match);
+
+        result.push({
+          name: summonerName,
+          count: 1,
+          matches: matches
+        });
+      } else {
+        result[summonerIndex].count++;
+        result[summonerIndex].matches.push(match);
+      }
+    }
+  }
+
+  // Sort by Descending Order
+  result.sort(function(a, b) {
+    return b.count - a.count;
+  });
+  return result;
 }
 
 // Module Exports

@@ -19,3 +19,10 @@ app.get('/', async (req, res) => {
 app.listen(8080, err => {
   console.log('Listening on Port 8080');
 });
+
+// async function debugging() {
+//   let result = await functions.main('Anti213', 'na1');
+//   console.log(result);
+// }
+
+// debugging();

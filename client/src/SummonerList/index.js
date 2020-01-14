@@ -56,7 +56,7 @@ const Demo = props => {
   let testUrl = 'http://localhost:8080';
 
   async function pingServer() {
-    fetch(url)
+    fetch(testUrl)
       .then(response => {
         return response.json();
       })
@@ -71,7 +71,7 @@ const Demo = props => {
     let emails2 = [];
 
     response.forEach((player, index) => {
-      let message = `Played together ${player.frequency} times.`;
+      let message = `Played together ${player.count} times.`;
       let avatar = player.name[0];
       let id = index + 1;
 
@@ -121,7 +121,7 @@ const Demo = props => {
 
   return (
     <div>
-      <StyledListItem className='p-4 text-2xl font-bold'>
+      <StyledListItem className='p-4 text-2xl font-bold bg-gray-100'>
         Doublelift - {response ? 'Data Retrieved' : 'Getting Data'}
         <div className='text-base font-normal'>
           Data from the last {response ? 3 : 0} games.

@@ -73,7 +73,7 @@ const CustomHeader = () => {
                   <div>
                     <input
                       className='block w-full py-2 pl-10 pr-4 leading-normal placeholder-gray-600 bg-gray-200 border border-transparent rounded-lg appearance-none transition focus:outline-0 focus:bg-white focus:border-gray-300 ds-input'
-                      placeholder='Search Summoner'
+                      placeholder='Summoner Search'
                     ></input>
                   </div>
                   <div className='absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none'>
@@ -111,14 +111,7 @@ const CustomHeader = () => {
 function App() {
   return (
     <div>
-      {/* <MobileWarning /> */}
-
-      {/* <div> */}
-      {/* TestFetch Results: */}
-      {/* {response ? <div>{response}</div> : <div>Getting Data</div>} */}
-      {/* </div> */}
       <Router>
-        {/* <GlobalStyle /> */}
         <Switch>
           <Route
             path='/'
