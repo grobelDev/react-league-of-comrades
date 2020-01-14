@@ -56,7 +56,7 @@ const Demo = () => {
   let testUrl = 'http://localhost:8080';
 
   async function pingServer() {
-    fetch(testUrl)
+    fetch(url)
       .then(response => {
         return response.json();
       })
