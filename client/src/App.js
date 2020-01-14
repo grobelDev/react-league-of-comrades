@@ -60,14 +60,14 @@ const CustomHeader = () => {
       <div className='fixed inset-x-0 top-0 z-10 flex items-center h-16 bg-white border-b border-gray-200'>
         <div className='relative w-full px-6 mx-auto max-w-screen-xl'>
           <div className='flex items-center -mx-6'>
-            <div className='pl-6 pr-6 lg:w-1/4 xl:w-1/5 lg:pr-8'>
+            <div className='pl-6 pr-6'>
               <div className='flex items-center'>
-                <a href='/summoner-list' className='block lg:mr-4'>
+                <a href='/summoner-list' className='block'>
                   LoC
                 </a>
               </div>
             </div>
-            <div className='flex flex-grow bg-gray lg:w-3/4 xl:w-4/5'>
+            <div className='flex flex-grow bg-gray'>
               <div className='w-full'>
                 <div className='relative'>
                   <div>
@@ -91,7 +91,7 @@ const CustomHeader = () => {
             <button
               type='button'
               id='sidebar-open'
-              className='flex items-center px-6 text-gray-500 lg:hidden focus:outline-none focus:text-gray-700'
+              className='flex items-center px-6 text-gray-500 focus:outline-none focus:text-gray-700'
             >
               <svg
                 className='w-4 h-4 fill-current'
@@ -109,29 +109,9 @@ const CustomHeader = () => {
 };
 
 function App() {
-  // const [response, setResponse] = useState('');
-
-  // let url = 'https://server-nch7pipeyq-uc.a.run.app';
-  // let testUrl = 'http://localhost:8080';
-
-  // async function pingServer() {
-  //   fetch(testUrl)
-  //     .then(response => {
-  //       return response.json();
-  //     })
-  //     .then(myJson => {
-  //       console.log(myJson);
-  //       setResponse(JSON.stringify(myJson));
-  //     });
-  // }
-
-  // if (!response) {
-  //   // pingServer();
-  // }
-
   return (
     <div>
-      <MobileWarning />
+      {/* <MobileWarning /> */}
 
       {/* <div> */}
       {/* TestFetch Results: */}
@@ -165,7 +145,7 @@ function App() {
                 <Route path={r.path} key={r.path}>
                   <CustomHeader></CustomHeader>
                   <div className='mt-16'>
-                    <Component />
+                    <Component exampleProp='17' />
                   </div>
                 </Route>
               </div>

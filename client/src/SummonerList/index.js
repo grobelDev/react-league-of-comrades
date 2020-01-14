@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
-import { StyledCollapseHandler } from './styled-components';
+import { StyledCollapseHandler, StyledListItem } from './styled-components';
 
 const StyledEmailList = styled.ul``;
 
@@ -48,7 +48,7 @@ const emailsPlaceholder = [
 
 const exitDuration = 250;
 
-const Demo = () => {
+const Demo = props => {
   const [emails, setEmails] = useState(emailsPlaceholder);
   const [response, setResponse] = useState(null);
 
@@ -61,7 +61,6 @@ const Demo = () => {
         return response.json();
       })
       .then(myJson => {
-        // console.log(myJson);
         setResponse(myJson);
       });
   }
@@ -69,8 +68,6 @@ const Demo = () => {
   if (!response) {
     pingServer();
   } else if (emails === emailsPlaceholder) {
-    // console.log(response);
-
     let emails2 = [];
 
     response.forEach((player, index) => {
@@ -87,10 +84,6 @@ const Demo = () => {
       emails2.push(playerObject);
     });
     setEmails(emails2);
-    // let playerResult = response.forEach(player => ({
-    // ...player
-    // }));
-    // console.log(playerResult);
   }
 
   // NON-CUSTOM CODE
@@ -127,27 +120,35 @@ const Demo = () => {
   }, []);
 
   return (
-    <StyledEmailList ref={listRef}>
-      {emailIds.map(id => {
-        const isBeingDeleted = id === deletingId;
-        const { avatar, title, message } = emails[id % emails.length];
-        return (
-          <ListItem
-            key={id}
-            deleteItem={deleteItem}
-            id={id}
-            isBeingDeleted={isBeingDeleted}
-            avatar={avatar}
-            title={title}
-            message={message}
-          />
-        );
-      })}
-      <StyledCollapseHandler
-        ref={collapseHandlerRef}
-        exitDuration={exitDuration}
-      />
-    </StyledEmailList>
+    <div>
+      <StyledListItem className='p-4 text-2xl font-bold'>
+        Doublelift - {response ? 'Data Retrieved' : 'Getting Data'}
+        <div className='text-base font-normal'>
+          Data from the last {response ? 3 : 0} games.
+        </div>
+      </StyledListItem>
+      <StyledEmailList ref={listRef}>
+        {emailIds.map(id => {
+          const isBeingDeleted = id === deletingId;
+          const { avatar, title, message } = emails[id % emails.length];
+          return (
+            <ListItem
+              key={id}
+              deleteItem={deleteItem}
+              id={id}
+              isBeingDeleted={isBeingDeleted}
+              avatar={avatar}
+              title={title}
+              message={message}
+            />
+          );
+        })}
+        <StyledCollapseHandler
+          ref={collapseHandlerRef}
+          exitDuration={exitDuration}
+        />
+      </StyledEmailList>
+    </div>
   );
 };
 
