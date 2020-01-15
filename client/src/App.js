@@ -58,6 +58,12 @@ function App() {
               );
             }}
           />
+          <Route
+            path='/'
+            render={() => {
+              return <div>404</div>;
+            }}
+          />
         </Switch>
       </Router>
     </div>
