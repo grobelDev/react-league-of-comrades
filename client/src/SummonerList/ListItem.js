@@ -82,41 +82,41 @@ const ListItem = ({
       }
 
       // hack
-      const isSwipeNavigation = deltaX < -200 && velocityX > -100;
-      if (isSwipeNavigation) return cancel();
+      // const isSwipeNavigation = deltaX < -200 && velocityX > -100;
+      // if (isSwipeNavigation) return cancel();
 
-      let newX;
-      let onRest = () => {};
-      if (last) {
-        const projectedEndpoint = x.value + projection(velocityX, 'fast');
-        newX = findNearestNumberInArray(projectedEndpoint, stops.current);
-        if (newX === stops.current[2]) {
-          onRest = ({ x }) => {
-            if (x <= stops.current[2]) {
-              deleteItem(id);
-              set({
-                onRest: null
-              });
-            }
-          };
-        }
-      } else {
-        newX = rubberBandIfOutOfBounds(
-          stops.current[2],
-          stops.current[0],
-          memo + movementX
-        );
-      }
+      // let newX;
+      // let onRest = () => {};
+      // if (last) {
+      //   const projectedEndpoint = x.value + projection(velocityX, 'fast');
+      //   newX = findNearestNumberInArray(projectedEndpoint, stops.current);
+      //   if (newX === stops.current[2]) {
+      //     onRest = ({ x }) => {
+      //       if (x <= stops.current[2]) {
+      //         deleteItem(id);
+      //         set({
+      //           onRest: null
+      //         });
+      //       }
+      //     };
+      //   }
+      // } else {
+      //   newX = rubberBandIfOutOfBounds(
+      //     stops.current[2],
+      //     stops.current[0],
+      //     memo + movementX
+      //   );
+      // }
 
-      set({
-        x: newX,
-        immediate: !last,
-        onRest,
-        config: {
-          ...spring,
-          clamp: last
-        }
-      });
+      // set({
+      //   x: newX,
+      //   immediate: !last,
+      //   onRest,
+      //   config: {
+      //     ...spring,
+      //     clamp: last
+      //   }
+      // });
 
       return memo;
     }
@@ -131,20 +131,21 @@ const ListItem = ({
       data-list-id={id}
     >
       <StyledListItem
-        as={animated.div}
-        style={{
-          transform: x.interpolate(x => `translateX(${x}px)`)
-        }}
+      // as={animated.div}
+      // style={{
+      //   transform: x.interpolate(x => `translateX(${x}px)`)
+      // }}
       >
         <StyledEmail>
           <StyledAvatar>{avatar}</StyledAvatar>
           <div>
             <h3>{title}</h3>
             <div>{message}</div>
+            <div>testing</div>
           </div>
         </StyledEmail>
       </StyledListItem>
-      <StyledAction
+      {/* <StyledAction
         archiveAction
         width={actionWidth}
         as={animated.div}
@@ -174,7 +175,7 @@ const ListItem = ({
         >
           Delete
         </animated.div>
-      </StyledAction>
+      </StyledAction> */}
     </StyledListItemContainer>
   );
 };

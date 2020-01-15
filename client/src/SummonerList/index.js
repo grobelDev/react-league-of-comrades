@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 import { StyledCollapseHandler, StyledListItem } from './styled-components';
@@ -49,41 +49,33 @@ const emailsPlaceholder = [
 const exitDuration = 250;
 
 const Demo = props => {
+  useEffect(() => {
+    async function resolveData() {
+      let data = await props.data;
+      setData(data);
+      // console.log(data);
+    }
+    resolveData();
+  }, [props.data]);
+
+  const [data, setData] = useState(null);
   const [emails, setEmails] = useState(emailsPlaceholder);
-  const [response, setResponse] = useState(null);
 
-  let url = 'https://server-nch7pipeyq-uc.a.run.app';
-  let testUrl = 'http://localhost:8080';
-
-  async function pingServer() {
-    fetch(testUrl)
-      .then(response => {
-        return response.json();
-      })
-      .then(myJson => {
-        setResponse(myJson);
-      });
-  }
-
-  if (!response) {
-    pingServer();
-  } else if (emails === emailsPlaceholder) {
-    let emails2 = [];
-
-    response.forEach((player, index) => {
+  if (data && emails === emailsPlaceholder) {
+    let newData = data.map((player, index) => {
       let message = `Played together ${player.count} times.`;
-      let avatar = player.name[0];
+      let avatar = player.count;
       let id = index + 1;
-
       let playerObject = {
         title: player.name,
         message: message,
         avatar: avatar,
         id: id
       };
-      emails2.push(playerObject);
+      return playerObject;
     });
-    setEmails(emails2);
+
+    setEmails(newData);
   }
 
   // NON-CUSTOM CODE
@@ -92,39 +84,12 @@ const Demo = props => {
   const listRef = React.useRef(null);
   const collapseHandlerRef = React.useRef(null);
 
-  const deleteItem = React.useCallback(deleteId => {
-    setDeletingId(deleteId);
-    const componentsAfter = [
-      ...listRef.current.querySelectorAll('[data-list-id]')
-    ].filter(component => {
-      const id = component.dataset.listId;
-      if (id <= deleteId) return false;
-      return true;
-    });
-    collapseHandlerRef.current.style.transition = 'none';
-    collapseHandlerRef.current.style.transform = `translateY(71px)`;
-    const fragment = document.createDocumentFragment();
-    componentsAfter.forEach(c => fragment.appendChild(c));
-    collapseHandlerRef.current.appendChild(fragment);
-
-    requestAnimationFrame(() => {
-      collapseHandlerRef.current.style.transition = '';
-      collapseHandlerRef.current.style.transform = 'translateY(-1px)';
-      setTimeout(() => {
-        componentsAfter.forEach(c => listRef.current.appendChild(c));
-        listRef.current.appendChild(collapseHandlerRef.current);
-
-        setEmailIds(prevEmails => prevEmails.filter(id => id !== deleteId));
-      }, exitDuration);
-    });
-  }, []);
-
   return (
     <div>
       <StyledListItem className='p-4 text-2xl font-bold bg-gray-100'>
-        Doublelift - {response ? 'Data Retrieved' : 'Getting Data'}
+        Doublelift - {data ? 'Data Retrieved' : 'Getting Data'}
         <div className='text-base font-normal'>
-          Data from the last {response ? 3 : 0} games.
+          Data from the last {data ? data[0].count : 0} games.
         </div>
       </StyledListItem>
       <StyledEmailList ref={listRef}>
@@ -134,7 +99,7 @@ const Demo = props => {
           return (
             <ListItem
               key={id}
-              deleteItem={deleteItem}
+              // deleteItem={deleteItem}
               id={id}
               isBeingDeleted={isBeingDeleted}
               avatar={avatar}
@@ -151,5 +116,34 @@ const Demo = props => {
     </div>
   );
 };
+
+// ARCHIVE
+
+// const deleteItem = React.useCallback(deleteId => {
+//   setDeletingId(deleteId);
+//   const componentsAfter = [
+//     ...listRef.current.querySelectorAll('[data-list-id]')
+//   ].filter(component => {
+//     const id = component.dataset.listId;
+//     if (id <= deleteId) return false;
+//     return true;
+//   });
+//   collapseHandlerRef.current.style.transition = 'none';
+//   collapseHandlerRef.current.style.transform = `translateY(71px)`;
+//   const fragment = document.createDocumentFragment();
+//   componentsAfter.forEach(c => fragment.appendChild(c));
+//   collapseHandlerRef.current.appendChild(fragment);
+
+//   requestAnimationFrame(() => {
+//     collapseHandlerRef.current.style.transition = '';
+//     collapseHandlerRef.current.style.transform = 'translateY(-1px)';
+//     setTimeout(() => {
+//       componentsAfter.forEach(c => listRef.current.appendChild(c));
+//       listRef.current.appendChild(collapseHandlerRef.current);
+
+//       setEmailIds(prevEmails => prevEmails.filter(id => id !== deleteId));
+//     }, exitDuration);
+//   });
+// }, []);
 
 export default Demo;
