@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Header = () => {
+  const [name, setName] = useState('');
+  const history = useHistory();
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    history.push(`/na1/${name}`);
+  }
+
   return (
     <div id='header'>
       <div className='fixed inset-x-0 top-0 z-10 flex items-center h-16 bg-white border-b border-gray-200'>
@@ -8,7 +17,7 @@ const Header = () => {
           <div className='flex items-center -mx-6'>
             <div className='pl-6 pr-6'>
               <div className='flex items-center'>
-                <a href='/summoner-list' className='block'>
+                <a href='/' className='block'>
                   LoC
                 </a>
               </div>
@@ -17,10 +26,15 @@ const Header = () => {
               <div className='w-full'>
                 <div className='relative'>
                   <div>
-                    <input
-                      className='block w-full py-2 pl-10 pr-4 leading-normal placeholder-gray-600 bg-gray-200 border border-transparent rounded-lg appearance-none transition focus:outline-0 focus:bg-white focus:border-gray-300 ds-input'
-                      placeholder='Summoner Search'
-                    ></input>
+                    <form onSubmit={handleSubmit}>
+                      <input
+                        className='block w-full py-2 pl-10 pr-4 leading-normal placeholder-gray-600 bg-gray-200 border border-transparent rounded-lg appearance-none transition focus:outline-0 focus:bg-white focus:border-gray-300 ds-input'
+                        placeholder='Summoner Search'
+                        type='text'
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                      ></input>
+                    </form>
                   </div>
                   <div className='absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none'>
                     <svg

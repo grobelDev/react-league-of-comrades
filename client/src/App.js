@@ -1,5 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useLocation
+} from 'react-router-dom';
 import styled from 'styled-components';
 // import GlobalStyle from "./GlobalStyle"
 // import SwipeableTabs from "./SwipeableTabs"
@@ -8,6 +15,7 @@ import SummonerList from './SummonerList';
 // import PhotoGrid from "./PhotoGrid"
 // import Notification from "./Notification"
 import Header from './Header';
+import SearchContext from './SearchContext';
 
 const routes = [
   { path: '/summoner-list', component: SummonerList, title: 'Summoner List' }
@@ -21,51 +29,117 @@ const routes = [
   // { path: "/notification", component: Notification, title: "Notification" }
 ];
 
+// async function fetchData(name, region) {
+//   let url = 'https://server-nch7pipeyq-uc.a.run.app';
+//   let testUrl = 'http://localhost:8080';
+//   let currentUrl = testUrl;
+
+//   if (!name || !region) {
+//     return;
+//   }
+
+//   let fetchUrl = new URL(currentUrl),
+//     params = { name: name, region: region };
+//   Object.keys(params).forEach(key =>
+//     fetchUrl.searchParams.append(key, params[key])
+//   );
+
+//   fetch(fetchUrl)
+//     .then(response => {
+//       return response.json();
+//     })
+//     .then(myJson => {
+//       return myJson;
+//     });
+// }
+
 function App() {
-  const [emails, setEmails] = useState(null);
+  // const input = useContext(SearchContext);
+  // console.log(input);
+
+  const [name, setName] = useState(null);
+  const [region, setRegion] = useState(null);
   const [data, setData] = useState(null);
+  const [locationWatcher, setLocationWatcher] = useState(null);
 
-  let url = 'https://server-nch7pipeyq-uc.a.run.app';
-  let testUrl = 'http://localhost:8080';
+  let location = useLocation();
 
-  async function pingServer() {
-    fetch(url)
-      .then(response => {
-        return response.json();
-      })
-      .then(myJson => {
-        setData(myJson);
-      });
+  function SummonerListWithParams() {
+    const { name, region } = useParams();
+
+    useEffect(() => {
+      async function fetchData(name, region) {
+        let url = 'https://server-nch7pipeyq-uc.a.run.app';
+        let testUrl = 'http://localhost:8080';
+        let currentUrl = testUrl;
+
+        if (!name || !region) {
+          return;
+        }
+
+        let fetchUrl = new URL(currentUrl),
+          params = { name: name, region: region };
+        Object.keys(params).forEach(key =>
+          fetchUrl.searchParams.append(key, params[key])
+        );
+
+        fetch(fetchUrl)
+          .then(response => {
+            return response.json();
+          })
+          .then(myJson => {
+            setData(myJson);
+          });
+      }
+
+      if (location !== locationWatcher) {
+        setLocationWatcher(location);
+        fetchData(name, region);
+      }
+    }, [location]);
+
+    return <SummonerList name={name} data={data}></SummonerList>;
   }
-
   return (
     <div>
-      <Router>
-        <Switch>
-          <Route
-            path='/'
-            exact
-            render={() => {
-              return (
-                <div>
-                  <Header />
-                  <div className='mt-16'>
-                    <SummonerList
-                      data={!data ? pingServer() : data}
-                    ></SummonerList>
-                  </div>
+      <Switch>
+        <Route
+          path='/'
+          exact
+          render={() => {
+            return (
+              <div>
+                <Header />
+                <div className='mt-16'>
+                  <SummonerList
+                  // data={!data ? pingServer() : data}
+                  ></SummonerList>
                 </div>
-              );
-            }}
-          />
-          <Route
-            path='/'
-            render={() => {
-              return <div>404</div>;
-            }}
-          />
-        </Switch>
-      </Router>
+              </div>
+            );
+          }}
+        />
+        <Route
+          path='/:region/:name'
+          render={() => {
+            return (
+              <div>
+                <Header />
+                <div className='mt-16'>
+                  <SummonerListWithParams />
+                </div>
+              </div>
+            );
+          }}
+        />
+
+        <Route
+          path='/'
+          render={() => {
+            return <div>404</div>;
+          }}
+        />
+      </Switch>
     </div>
   );
 }
@@ -147,5 +221,14 @@ function App() {
 // const MobileWarning = () => {
 //   return <MessageWrapper>Currently only optimized for mobile!</MessageWrapper>;
 // };
+
+// function BlogPost() {
+//   let { region, name } = useParams();
+//   console.log(region, name);
+//   setRegion(region);
+//   setName(name);
+
+//   return <div>{`Summoner ${name} is from ${region}`}</div>;
+// }
 
 export default App;

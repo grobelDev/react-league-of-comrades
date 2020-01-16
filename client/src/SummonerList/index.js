@@ -49,10 +49,24 @@ const emailsPlaceholder = [
 const exitDuration = 250;
 
 const Demo = props => {
+  const [name, setName] = useState(props.name);
+  // console.log(props.name);
+
+  // useEffect(() => {
+  //   async function resolveName() {
+  //     let name = await props.name;
+  //     setName(name);
+  //     // console.log(data);
+  //   }
+  //   resolveName();
+
+  // }, [props.name])
+
   useEffect(() => {
-    async function resolveData() {
-      let data = await props.data;
-      setData(data);
+    function resolveData() {
+      let data2 = props.data;
+      // console.log(data2);
+      setData(data2);
       // console.log(data);
     }
     resolveData();
@@ -87,7 +101,7 @@ const Demo = props => {
   return (
     <div>
       <StyledListItem className='p-4 text-2xl font-bold bg-gray-100'>
-        Doublelift - {data ? 'Data Retrieved' : 'Getting Data'}
+        {name} - {data ? 'Data Retrieved' : 'Getting Data'}
         <div className='text-base font-normal'>
           Data from the last {data ? data[0].count : 0} games.
         </div>

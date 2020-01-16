@@ -11,7 +11,11 @@ app.use(bodyParser.json());
 
 // Express route handlers
 app.get('/', async (req, res) => {
-  let result = await functions.main('Doublelift', 'na1');
+  // console.log(req);
+  let name = req.query.name;
+  let region = req.query.region;
+  // console.log(name, region);
+  let result = await functions.main(name, region);
   // console.log(typeof result);
   res.send(result);
 });
