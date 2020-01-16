@@ -29,30 +29,6 @@ const routes = [
   // { path: "/notification", component: Notification, title: "Notification" }
 ];
 
-// async function fetchData(name, region) {
-//   let url = 'https://server-nch7pipeyq-uc.a.run.app';
-//   let testUrl = 'http://localhost:8080';
-//   let currentUrl = testUrl;
-
-//   if (!name || !region) {
-//     return;
-//   }
-
-//   let fetchUrl = new URL(currentUrl),
-//     params = { name: name, region: region };
-//   Object.keys(params).forEach(key =>
-//     fetchUrl.searchParams.append(key, params[key])
-//   );
-
-//   fetch(fetchUrl)
-//     .then(response => {
-//       return response.json();
-//     })
-//     .then(myJson => {
-//       return myJson;
-//     });
-// }
-
 function App() {
   // const input = useContext(SearchContext);
   // console.log(input);
@@ -71,7 +47,7 @@ function App() {
       async function fetchData(name, region) {
         let url = 'https://server-nch7pipeyq-uc.a.run.app';
         let testUrl = 'http://localhost:8080';
-        let currentUrl = testUrl;
+        let currentUrl = url;
 
         if (!name || !region) {
           return;
@@ -100,6 +76,7 @@ function App() {
 
     return <SummonerList name={name} data={data}></SummonerList>;
   }
+
   return (
     <div>
       <Switch>
