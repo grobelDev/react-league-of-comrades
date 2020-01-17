@@ -42,7 +42,7 @@ const Header = () => {
     let _name = paths[2];
 
     setRegion(validRegionsReverse[_region]);
-    setName(_name);
+    // setName(_name);
   }, [location]);
 
   function handleSubmit(event) {

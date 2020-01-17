@@ -15,6 +15,7 @@ import {
   projection,
   range
 } from '../utilities';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 const actionWidth = 100;
 const threshold = 15;
@@ -141,7 +142,7 @@ const ListItem = ({
           <div>
             <h3>{title}</h3>
             <div>{message}</div>
-            <div>testing</div>
+            {/* <Link to={`./${title}`}>Additional</Link> */}
           </div>
         </StyledEmail>
       </StyledListItem>

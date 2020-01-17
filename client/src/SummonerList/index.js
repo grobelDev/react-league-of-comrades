@@ -5,7 +5,7 @@ import { StyledCollapseHandler, StyledListItem } from './styled-components';
 
 const StyledEmailList = styled.ul``;
 
-const messageIds = [...new Array(40).keys()];
+const messageIds = [...new Array(15).keys()];
 
 const emailsPlaceholder = [
   {
@@ -64,32 +64,47 @@ const Demo = props => {
     setData(props.data);
   }, [props]);
 
-  // After the props update
-  if (data && emails === emailsPlaceholder) {
-    let filteredData = data;
+  useEffect(() => {
+    function updateData() {
+      if (!data || !name) {
+        return;
+      }
 
-    let formattedName = data.find(player => player.name.toLowerCase() === name);
-    if (formattedName) {
-      filteredData = data.filter(player => player.name !== formattedName.name);
+      let formattedName = data.find(
+        player => player.name.toLowerCase() === name.toLowerCase()
+      );
+
+      if (!formattedName) {
+        return;
+      }
+
+      let filteredData = data.filter(
+        player => player.name !== formattedName.name
+      );
+
+      let newData = filteredData.map((player, index) => {
+        let message = `Played together ${player.count} times.`;
+        let avatar = player.count;
+        let id = index + 1;
+        let playerObject = {
+          title: player.name,
+          message: message,
+          avatar: avatar,
+          id: id
+        };
+        return playerObject;
+      });
+
+      // update name formatting
       setName(formattedName.name);
+
+      // update data
+      setEmailIds([...new Array(newData.length).keys()]);
+      setEmails(newData);
     }
 
-    let newData = filteredData.map((player, index) => {
-      let message = `Played together ${player.count} times.`;
-      let avatar = player.count;
-      let id = index + 1;
-      let playerObject = {
-        title: player.name,
-        message: message,
-        avatar: avatar,
-        id: id
-      };
-      return playerObject;
-    });
-
-    setEmailIds([...new Array(newData.length).keys()]);
-    setEmails(newData);
-  }
+    updateData();
+  }, [data]);
 
   return (
     <div>
@@ -123,34 +138,5 @@ const Demo = props => {
     </div>
   );
 };
-
-// ARCHIVE
-
-// const deleteItem = React.useCallback(deleteId => {
-//   setDeletingId(deleteId);
-//   const componentsAfter = [
-//     ...listRef.current.querySelectorAll('[data-list-id]')
-//   ].filter(component => {
-//     const id = component.dataset.listId;
-//     if (id <= deleteId) return false;
-//     return true;
-//   });
-//   collapseHandlerRef.current.style.transition = 'none';
-//   collapseHandlerRef.current.style.transform = `translateY(71px)`;
-//   const fragment = document.createDocumentFragment();
-//   componentsAfter.forEach(c => fragment.appendChild(c));
-//   collapseHandlerRef.current.appendChild(fragment);
-
-//   requestAnimationFrame(() => {
-//     collapseHandlerRef.current.style.transition = '';
-//     collapseHandlerRef.current.style.transform = 'translateY(-1px)';
-//     setTimeout(() => {
-//       componentsAfter.forEach(c => listRef.current.appendChild(c));
-//       listRef.current.appendChild(collapseHandlerRef.current);
-
-//       setEmailIds(prevEmails => prevEmails.filter(id => id !== deleteId));
-//     }, exitDuration);
-//   });
-// }, []);
 
 export default Demo;
