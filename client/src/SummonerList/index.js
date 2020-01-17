@@ -50,33 +50,30 @@ const exitDuration = 250;
 
 const Demo = props => {
   const [name, setName] = useState(props.name);
-  // console.log(props.name);
-
-  // useEffect(() => {
-  //   async function resolveName() {
-  //     let name = await props.name;
-  //     setName(name);
-  //     // console.log(data);
-  //   }
-  //   resolveName();
-
-  // }, [props.name])
+  // NON-CUSTOM CODE
+  const [emailIds, setEmailIds] = React.useState(messageIds);
+  const [deletingId, setDeletingId] = React.useState();
+  const listRef = React.useRef(null);
+  const collapseHandlerRef = React.useRef(null);
 
   useEffect(() => {
-    function resolveData() {
-      let data2 = props.data;
-      // console.log(data2);
-      setData(data2);
-      // console.log(data);
-    }
-    resolveData();
-  }, [props.data]);
+    setName(props.name);
+    setData(props.data);
+  }, [props]);
 
   const [data, setData] = useState(null);
   const [emails, setEmails] = useState(emailsPlaceholder);
 
   if (data && emails === emailsPlaceholder) {
-    let newData = data.map((player, index) => {
+    let filteredData = data;
+
+    let formattedName = data.find(player => player.name.toLowerCase() === name);
+    if (formattedName) {
+      filteredData = data.filter(player => player.name !== formattedName.name);
+      setName(formattedName.name);
+    }
+
+    let newData = filteredData.map((player, index) => {
       let message = `Played together ${player.count} times.`;
       let avatar = player.count;
       let id = index + 1;
@@ -89,14 +86,9 @@ const Demo = props => {
       return playerObject;
     });
 
+    setEmailIds([...new Array(newData.length).keys()]);
     setEmails(newData);
   }
-
-  // NON-CUSTOM CODE
-  const [emailIds, setEmailIds] = React.useState(messageIds);
-  const [deletingId, setDeletingId] = React.useState();
-  const listRef = React.useRef(null);
-  const collapseHandlerRef = React.useRef(null);
 
   return (
     <div>

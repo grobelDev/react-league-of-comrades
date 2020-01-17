@@ -1,9 +1,35 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+
+const validRegions = {
+  NA: 'na1',
+  KR: 'kr',
+  JP: 'jp1',
+  EUW: 'euw1',
+  EUN: 'eun1',
+  OC: 'oc1',
+  BR: 'br1',
+  LAS: 'la1',
+  LAN: 'la2',
+  RU: 'ru',
+  TR: 'tr1'
+};
 
 const Header = () => {
   const [name, setName] = useState('');
+  const [region, setRegion] = useState('');
+
+  let location = useLocation();
   const history = useHistory();
+
+  useEffect(() => {
+    // let paths = location.pathname.split('/');
+    // let _region = 'NA1';
+    // let _name = paths[2];
+    // console.log(paths);
+    // setRegion(_region);
+    // setName(_name);
+  }, [location]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -48,7 +74,37 @@ const Header = () => {
                 </div>
               </div>
             </div>
-            <button
+            <div className='relative inline-block px-2 w-30'>
+              <select
+                className='block w-full px-4 py-2 pr-8 leading-tight bg-white border border-gray-400 rounded shadow appearance-none hover:border-gray-500 focus:outline-none focus:shadow-outline'
+                value={region}
+                onChange={e => {
+                  setRegion(e.target.value);
+                }}
+              >
+                <option>NA</option>
+                <option>KR</option>
+                <option>JP</option>
+                <option>EUW</option>
+                <option>EUNE</option>
+                <option>OC</option>
+                <option>BR</option>
+                <option>LAS</option>
+                <option>LAN</option>
+                <option>RU</option>
+                <option>TR</option>
+              </select>
+              <div className='absolute inset-y-0 right-0 flex items-center px-4 text-gray-700 pointer-events-none'>
+                <svg
+                  className='w-4 h-4 fill-current'
+                  xmlns='http://www.w3.org/2000/svg'
+                  viewBox='0 0 20 20'
+                >
+                  <path d='M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z' />
+                </svg>
+              </div>
+            </div>
+            {/* <button
               type='button'
               id='sidebar-open'
               className='flex items-center px-6 text-gray-500 focus:outline-none focus:text-gray-700'
@@ -60,7 +116,7 @@ const Header = () => {
               >
                 <path d='M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z'></path>
               </svg>
-            </button>{' '}
+            </button> */}
           </div>
         </div>
       </div>

@@ -42,7 +42,6 @@ function App() {
 
   function SummonerListWithParams() {
     const { name, region } = useParams();
-
     useEffect(() => {
       async function fetchData(name, region) {
         let url = 'https://server-nch7pipeyq-uc.a.run.app';
@@ -70,6 +69,7 @@ function App() {
 
       if (location !== locationWatcher) {
         setLocationWatcher(location);
+        // setName(name);
         fetchData(name, region);
       }
     }, [location]);
@@ -88,9 +88,7 @@ function App() {
               <div>
                 <Header />
                 <div className='mt-16'>
-                  <SummonerList
-                  // data={!data ? pingServer() : data}
-                  ></SummonerList>
+                  <SummonerList></SummonerList>
                 </div>
               </div>
             );
