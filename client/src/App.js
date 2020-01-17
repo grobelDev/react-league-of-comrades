@@ -78,6 +78,44 @@ function App() {
     return <SummonerList name={name} data={data}></SummonerList>;
   }
 
+  function MatchHistoryWithParams() {
+    const { name, region, comrade } = useParams();
+    useEffect(() => {
+      async function fetchData(name, region) {
+        let url = 'https://server-nch7pipeyq-uc.a.run.app';
+        let testUrl = 'http://localhost:8080';
+        let currentUrl = url;
+
+        if (!name || !region) {
+          return;
+        }
+
+        let fetchUrl = new URL(currentUrl),
+          params = { name: name, region: region };
+        Object.keys(params).forEach(key =>
+          fetchUrl.searchParams.append(key, params[key])
+        );
+
+        fetch(fetchUrl)
+          .then(response => {
+            return response.json();
+          })
+          .then(myJson => {
+            setData(myJson);
+          });
+      }
+
+      if (location !== locationWatcher) {
+        setLocationWatcher(location);
+        // setName(name);
+        fetchData(name, region);
+      }
+    }, [location]);
+    return (
+      <MatchHistory name={name} data={data} comrade={comrade}></MatchHistory>
+    );
+  }
+
   return (
     <div>
       <Switch>
@@ -116,7 +154,7 @@ function App() {
               <div>
                 <Header />
                 <div className='mt-16'>
-                  <MatchHistory></MatchHistory>
+                  <MatchHistoryWithParams></MatchHistoryWithParams>
                 </div>
               </div>
             );
