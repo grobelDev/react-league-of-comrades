@@ -15,6 +15,20 @@ const validRegions = {
   TR: 'tr1'
 };
 
+const validRegionsReverse = {
+  na1: 'NA',
+  kr: 'KR',
+  jp1: 'JP',
+  euw1: 'EUW',
+  eun1: 'EUN',
+  oc1: 'OC',
+  br1: 'BR',
+  la1: 'LAS',
+  la2: 'LAN',
+  ru: 'RU',
+  tr1: 'TR'
+};
+
 const Header = () => {
   const [name, setName] = useState('');
   const [region, setRegion] = useState('');
@@ -23,17 +37,17 @@ const Header = () => {
   const history = useHistory();
 
   useEffect(() => {
-    // let paths = location.pathname.split('/');
-    // let _region = 'NA1';
-    // let _name = paths[2];
-    // console.log(paths);
-    // setRegion(_region);
-    // setName(_name);
+    let paths = location.pathname.split('/');
+    let _region = paths[1];
+    let _name = paths[2];
+
+    setRegion(validRegionsReverse[_region]);
+    setName(_name);
   }, [location]);
 
   function handleSubmit(event) {
     event.preventDefault();
-    history.push(`/na1/${name}`);
+    history.push(`/${validRegions[region]}/${name}`);
   }
 
   return (

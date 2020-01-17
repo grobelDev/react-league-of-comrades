@@ -50,6 +50,9 @@ const exitDuration = 250;
 
 const Demo = props => {
   const [name, setName] = useState(props.name);
+  const [data, setData] = useState(null);
+  const [emails, setEmails] = useState(emailsPlaceholder);
+
   // NON-CUSTOM CODE
   const [emailIds, setEmailIds] = React.useState(messageIds);
   const [deletingId, setDeletingId] = React.useState();
@@ -61,9 +64,7 @@ const Demo = props => {
     setData(props.data);
   }, [props]);
 
-  const [data, setData] = useState(null);
-  const [emails, setEmails] = useState(emailsPlaceholder);
-
+  // After the props update
   if (data && emails === emailsPlaceholder) {
     let filteredData = data;
 

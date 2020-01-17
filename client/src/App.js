@@ -16,6 +16,7 @@ import SummonerList from './SummonerList';
 // import Notification from "./Notification"
 import Header from './Header';
 import SearchContext from './SearchContext';
+import MatchHistory from './MatchHistory';
 
 const routes = [
   { path: '/summoner-list', component: SummonerList, title: 'Summoner List' }
@@ -95,6 +96,7 @@ function App() {
           }}
         />
         <Route
+          exact
           path='/:region/:name'
           render={() => {
             return (
@@ -107,7 +109,19 @@ function App() {
             );
           }}
         />
-
+        <Route
+          path='/:region/:name/:comrade'
+          render={() => {
+            return (
+              <div>
+                <Header />
+                <div className='mt-16'>
+                  <MatchHistory></MatchHistory>
+                </div>
+              </div>
+            );
+          }}
+        />
         <Route
           path='/'
           render={() => {
