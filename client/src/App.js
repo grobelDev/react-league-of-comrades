@@ -5,7 +5,8 @@ import {
   Route,
   Link,
   useParams,
-  useLocation
+  useLocation,
+  Redirect
 } from 'react-router-dom';
 import styled from 'styled-components';
 // import GlobalStyle from "./GlobalStyle"
@@ -119,7 +120,9 @@ function App() {
   return (
     <div>
       <Switch>
-        <Route
+        <Redirect exact from='/' to='/na1/Doublelift' />
+
+        {/* <Route
           path='/'
           exact
           render={() => {
@@ -132,7 +135,7 @@ function App() {
               </div>
             );
           }}
-        />
+        /> */}
         <Route
           exact
           path='/:region/:name'

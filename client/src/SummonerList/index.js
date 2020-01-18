@@ -127,6 +127,8 @@ const Demo = props => {
               avatar={avatar}
               title={title}
               message={message}
+              name={name}
+              // region={region}
             />
           );
         })}

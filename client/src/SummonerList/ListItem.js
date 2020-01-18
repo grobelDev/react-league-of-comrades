@@ -33,7 +33,8 @@ const ListItem = ({
   message,
   deleteItem,
   id,
-  isBeingDeleted
+  isBeingDeleted,
+  name
 }) => {
   const itemRef = useRef(null);
   const stops = useRef(null);
@@ -47,19 +48,19 @@ const ListItem = ({
     x: 0
   }));
 
-  const calculateDeleteButtonTransforms = x => {
-    if (x < actionsOpen && stops.current) {
-      const deleteStop = stops.current[stops.current.length - 1];
-      const dragPercentage = Math.abs(
-        (x - actionsOpen) / (deleteStop - actionsOpen)
-      );
-      const translateX = range(-actionWidth, deleteStop, dragPercentage);
-      const scaleX = range(1, -deleteStop / actionWidth, dragPercentage);
+  // const calculateDeleteButtonTransforms = x => {
+  //   if (x < actionsOpen && stops.current) {
+  //     const deleteStop = stops.current[stops.current.length - 1];
+  //     const dragPercentage = Math.abs(
+  //       (x - actionsOpen) / (deleteStop - actionsOpen)
+  //     );
+  //     const translateX = range(-actionWidth, deleteStop, dragPercentage);
+  //     const scaleX = range(1, -deleteStop / actionWidth, dragPercentage);
 
-      return { scaleX, translateX };
-    }
-    return { scaleX: 1.001, translateX: x / 2 };
-  };
+  //     return { scaleX, translateX };
+  //   }
+  //   return { scaleX: 1.001, translateX: x / 2 };
+  // };
 
   const bind = useDrag(
     ({
@@ -122,6 +123,7 @@ const ListItem = ({
       return memo;
     }
   );
+  // console.log(name);
 
   return (
     <StyledListItemContainer
@@ -140,9 +142,12 @@ const ListItem = ({
         <StyledEmail>
           <StyledAvatar>{avatar}</StyledAvatar>
           <div>
-            <h3>{title}</h3>
+            <Link to={`./${title}`}>
+              <h3>{title}</h3>
+            </Link>
+
             <div>{message}</div>
-            {/* <Link to={`./${title}`}>Additional</Link> */}
+            <Link to={`./${name}/${title}`}>Additional Information</Link>
           </div>
         </StyledEmail>
       </StyledListItem>
