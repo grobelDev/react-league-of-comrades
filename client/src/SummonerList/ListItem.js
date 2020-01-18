@@ -6,16 +6,16 @@ import {
   StyledEmail,
   StyledAvatar
 } from './styled-components';
-import { animated } from 'react-spring';
+// import { animated } from 'react-spring';
 import useVelocityTrackedSpring from '../useVelocityTrackedSpring.js';
 import { useDrag } from 'react-use-gesture';
-import {
-  rubberBandIfOutOfBounds,
-  findNearestNumberInArray,
-  projection,
-  range
-} from '../utilities';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+// import {
+//   rubberBandIfOutOfBounds,
+//   findNearestNumberInArray,
+//   projection,
+//   range
+// } from '../utilities';
+import { BrowserRouter as Router, Link, useHistory } from 'react-router-dom';
 
 const actionWidth = 100;
 const threshold = 15;
@@ -48,20 +48,6 @@ const ListItem = ({
     x: 0
   }));
 
-  // const calculateDeleteButtonTransforms = x => {
-  //   if (x < actionsOpen && stops.current) {
-  //     const deleteStop = stops.current[stops.current.length - 1];
-  //     const dragPercentage = Math.abs(
-  //       (x - actionsOpen) / (deleteStop - actionsOpen)
-  //     );
-  //     const translateX = range(-actionWidth, deleteStop, dragPercentage);
-  //     const scaleX = range(1, -deleteStop / actionWidth, dragPercentage);
-
-  //     return { scaleX, translateX };
-  //   }
-  //   return { scaleX: 1.001, translateX: x / 2 };
-  // };
-
   const bind = useDrag(
     ({
       vxvy: [velocityX],
@@ -83,47 +69,9 @@ const ListItem = ({
         memo = x.value - movementX;
       }
 
-      // hack
-      // const isSwipeNavigation = deltaX < -200 && velocityX > -100;
-      // if (isSwipeNavigation) return cancel();
-
-      // let newX;
-      // let onRest = () => {};
-      // if (last) {
-      //   const projectedEndpoint = x.value + projection(velocityX, 'fast');
-      //   newX = findNearestNumberInArray(projectedEndpoint, stops.current);
-      //   if (newX === stops.current[2]) {
-      //     onRest = ({ x }) => {
-      //       if (x <= stops.current[2]) {
-      //         deleteItem(id);
-      //         set({
-      //           onRest: null
-      //         });
-      //       }
-      //     };
-      //   }
-      // } else {
-      //   newX = rubberBandIfOutOfBounds(
-      //     stops.current[2],
-      //     stops.current[0],
-      //     memo + movementX
-      //   );
-      // }
-
-      // set({
-      //   x: newX,
-      //   immediate: !last,
-      //   onRest,
-      //   config: {
-      //     ...spring,
-      //     clamp: last
-      //   }
-      // });
-
       return memo;
     }
   );
-  // console.log(name);
 
   return (
     <StyledListItemContainer

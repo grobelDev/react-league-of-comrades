@@ -35,8 +35,8 @@ function App() {
   // const input = useContext(SearchContext);
   // console.log(input);
 
-  const [name, setName] = useState(null);
-  const [region, setRegion] = useState(null);
+  // const [name, setName] = useState(null);
+  // const [region, setRegion] = useState(null);
   const [data, setData] = useState(null);
   const [locationWatcher, setLocationWatcher] = useState(null);
 
@@ -45,7 +45,7 @@ function App() {
   function SummonerListWithParams() {
     const { name, region } = useParams();
     useEffect(() => {
-      async function fetchData(name, region) {
+      function fetchData(name, region) {
         let url = 'https://server-nch7pipeyq-uc.a.run.app';
         let testUrl = 'http://localhost:8080';
         let currentUrl = url;
@@ -82,7 +82,7 @@ function App() {
   function MatchHistoryWithParams() {
     const { name, region, comrade } = useParams();
     useEffect(() => {
-      async function fetchData(name, region) {
+      function fetchData(name, region) {
         let url = 'https://server-nch7pipeyq-uc.a.run.app';
         let testUrl = 'http://localhost:8080';
         let currentUrl = url;
@@ -121,7 +121,6 @@ function App() {
     <div>
       <Switch>
         <Redirect exact from='/' to='/na1/Doublelift' />
-
         {/* <Route
           path='/'
           exact

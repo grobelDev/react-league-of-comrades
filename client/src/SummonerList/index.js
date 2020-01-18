@@ -67,6 +67,8 @@ const Demo = props => {
   useEffect(() => {
     function updateData() {
       if (!data || !name) {
+        setEmails(emailsPlaceholder);
+        setEmailIds(messageIds);
         return;
       }
 
