@@ -35,14 +35,7 @@ const MatchHistory = props => {
     let matches = comradeData.matches;
     for (let i = 0; i < matches.length; i++) {
       let match = matches[i];
-
-      // eventual return values
-      // let isWin = _isWin(match);
-      // let isRemake = is;
-      // let gameCreation = gameDuration(match);
-      // let queueObject = queueObject(match);
-      // let gameDuration = gameDuration(match);
-      // let gameResult = gameResult(match);
+      console.log(match);
 
       //to-do
       let characterUsed;
@@ -128,7 +121,7 @@ const MatchHistory = props => {
     // let teamBlue = comradeMatches.teams[0];
     // let teamRed = comradeMatches.teams[1];
 
-    // console.log(matches);
+    console.log(matches);
     // console.log(specificMatches);
     // console.log(specificMatches);
     // console.log(comradeMatchOutcomes);

@@ -4,6 +4,25 @@ const fetch = require('node-fetch');
 
 let apiCalls = 0;
 
+async function mainV2(summonerName, region) {
+  try {
+    let gameCount = 3;
+
+    let accountId = await getAccountIdByNameV2(summonerName, region);
+    let matchlist = await getMatchlistByAccountIdV2(accountId, region);
+    let smallMatchListIds = matchlist
+      .slice(0, gameCount)
+      .map(match => match.gameId);
+    let matchIdArray = await getMatchIdsByMatchlist(smallMatchListIds, region);
+
+    let summonerArray = organizePlayerObject(matchIdArray);
+
+    return summonerArray;
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
 async function main(summonerName, region) {
   let gameCount = 3;
 
@@ -39,6 +58,7 @@ async function getAccountIdByNameV2(summonerName, region) {
     }
     throw new Error(response.statusText);
   } catch (err) {
+    throw new Error(err);
     console.log(err);
   }
 }
@@ -62,7 +82,7 @@ async function getMatchlistByAccountIdV2(accountId, region) {
     // const responseJson = undefined;
     // return await Promise.resolve(responseJson);
   } catch (err) {
-    console.log(err);
+    throw new Error(err);
     // $('#js-error-message').text(`Something went wrong: ${err.message}`);
   }
 }
@@ -93,7 +113,7 @@ async function getMatchInfoByMatchIdV2(matchId, region) {
     }
     throw new Error(response.statusText);
   } catch (err) {
-    // $('#js-error-message').text(`Something went wrong: ${err.message}`);
+    throw new Error(err);
   }
 }
 
@@ -156,7 +176,7 @@ async function getCurrentPatchV2() {
     }
     throw new Error(response.statusText);
   } catch (err) {
-    $('#js-error-message').text(`Something went wrong: ${err.message}`);
+    throw new Error(err);
   }
 }
 
@@ -171,7 +191,7 @@ async function getChampionListFromIdV2(currentPatch) {
       return championJSON;
     }
   } catch (err) {
-    $('#js-error-message').text(`Something went wrong: ${err.message}`);
+    throw new Error(err);
   }
 }
 
@@ -245,5 +265,6 @@ function organizePlayerObject(matchIdArray) {
 // Module Exports
 module.exports = {
   main: main,
+  mainV2: mainV2,
   getAccountIdByName: getAccountIdByNameV2
 };

@@ -39,7 +39,7 @@ const Header = () => {
   useEffect(() => {
     let paths = location.pathname.split('/');
     let _region = paths[1];
-    let _name = paths[2];
+    // let _name = paths[2];
 
     setRegion(validRegionsReverse[_region]);
     // setName(_name);

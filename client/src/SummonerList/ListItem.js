@@ -93,7 +93,6 @@ const ListItem = ({
             <Link to={`./${title}`}>
               <h3>{title}</h3>
             </Link>
-
             <div>{message}</div>
             <Link to={`./${name}/${title}`}>Additional Information</Link>
           </div>

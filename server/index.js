@@ -15,9 +15,16 @@ app.get('/', async (req, res) => {
   let name = req.query.name;
   let region = req.query.region;
   // console.log(name, region);
-  let result = await functions.main(name, region);
   // console.log(typeof result);
-  res.send(result);
+
+  try {
+    let result = await functions.mainV2(name, region);
+    res.status(200).send(result);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+
+  res.status(400).send(result);
 });
 
 app.listen(8080, err => {
