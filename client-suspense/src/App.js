@@ -1,4 +1,4 @@
-import React, { useState, useTransition, Suspense } from 'react';
+import React, { useState, useTransition, Suspense, useEffect } from 'react';
 import { fetchUserData } from './locApi';
 import styled from 'styled-components';
 import {
@@ -8,7 +8,8 @@ import {
   Link,
   useParams,
   useLocation,
-  Redirect
+  Redirect,
+  useRouteMatch
 } from 'react-router-dom';
 import Header from './Header';
 import SummonerList from './SummonerList';
@@ -103,10 +104,94 @@ function getNextIndex(id) {
   return id === 2 ? 0 : id + 1;
 }
 
+// function getParams()
+// function useFetch() {
+//   let UserMatch = useRouteMatch('/:region/:name');
+//   let ComradeMatch = useRouteMatch('/:region/:name/:comrade');
+//   const params = UserMatch.params;
+//   const userName = params.name;
+//   const userRegion = params.region;
+//   const resource = fetchUserData(userName, userRegion);
+//   return resource;
+// }
+
+// function useFetchResource() {
+//   let UserMatch = useRouteMatch('/:region/:name');
+//   const params = UserMatch.params;
+//   const userName = params.name;
+//   const userRegion = params.region;
+//   const resource = fetchUserData(userName, userRegion);
+//   console.log('asdflajfdslk');
+//   return resource;
+// }
+
+// let initialResource2 = useFetchResource();
 const initialResource = fetchUserData('doublelift', 'na1');
 
 function App() {
+  // const [data, setData] = useState(null);
+
+  // let UserMatch = useRouteMatch('/:region/:name');
+  // const params = UserMatch.params;
+  // const userName = params.name;
+  // const userRegion = params.region;
+  // const initialResource2 = fetchUserData(userName, userRegion);
+  // console.log('rendering...');
+  // let ComradeMatch = useRouteMatch('/:region/:name/:comrade');
+
+  let UserMatch = useRouteMatch('/:region/:name');
+
   const [resource, setResource] = useState(initialResource);
+  // const [matchWatcher, setMatchWatcher] = useState(
+  //   useRouteMatch('/:region/:name')
+  // );
+
+  let location = useLocation();
+
+  useEffect(() => {
+    // console.log(location);
+    // console.log(routeObject);
+
+    // setMatchWatcher(useRouteMatch('/:region/:name'));
+    if (UserMatch.isExact) {
+      const params = UserMatch.params;
+      const userName = params.name;
+      const userRegion = params.region;
+      console.log();
+      const resource = fetchUserData(userName, userRegion);
+      console.log(resource);
+      setResource(resource);
+    }
+    // if (UserMatch.isExact) {
+    // } else if (ComradeMatch.isExact) {
+    //   console.log('ComradeMatch');
+    // }
+  }, [location]);
+
+  // useEffect(() => {
+  //   // console.log(matchWatcher);
+  //   // const params = matchWatcher.params;
+  //   // const userName = params.name;
+  //   // const userRegion = params.region;
+  //   // const newResource = fetchUserData(userName, userRegion);
+  //   // setResource(newResource);
+  // }, [matchWatcher]);
+
+  // console.log(UserMatch);
+  // console.log(ComradeMatch);
+  // console.log(match.params);
+  // console.log(match.params);
+  // const { name, region, comrade } = useParams();
+  // console.log(name, region, comrade);
+  // if (fetchObject.name !== name || fetchObject.region !== region) {
+  //   setFetchObject({
+  //     name: name,
+  //     region: region,
+  //     comrade: comrade
+  //   });
+  // }
+
+  // return null;
 
   function handleRefreshClick() {
     const currentIndex = testData.findIndex(

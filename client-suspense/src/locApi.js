@@ -7,11 +7,66 @@ export function fetchUserData(userName, userRegion) {
   };
 }
 
+function wrapPromise(promise) {
+  let status = 'pending';
+  let result;
+  let suspender = promise.then(
+    r => {
+      status = 'success';
+      result = r;
+    },
+    e => {
+      status = 'error';
+      result = e;
+    }
+  );
+  return {
+    read() {
+      if (status === 'pending') {
+        throw suspender;
+      } else if (status === 'error') {
+        throw result;
+      } else if (status === 'success') {
+        return result;
+      }
+    }
+  };
+}
+
+// function fetchComradesV2(userName, userRegion) {
+//   let url = 'https://server-nch7pipeyq-uc.a.run.app';
+//   let testUrl = 'http://localhost:8080';
+//   let currentUrl = url;
+
+//   let fetchUrl = new URL(currentUrl),
+//     params = { name: userName, region: userRegion };
+//   Object.keys(params).forEach(key =>
+//     fetchUrl.searchParams.append(key, params[key])
+//   );
+
+//   // fixes weird characters
+//   fetchUrl.href = encodeURI(fetchUrl);
+
+//   return fetch(fetchUrl)
+//     .then(response => {
+//       if (!response.ok) {
+//         throw Error(response.statusText);
+//       }
+//       return response.json();
+//     })
+//     .then(myJson => {
+//       return myJson;
+//     })
+//     .catch(error => {
+//       thro('Error:', error);
+//     });
+// }
+
 function fetchComrades(userName, userRegion) {
   return new Promise(function(resolve, reject) {
     let url = 'https://server-nch7pipeyq-uc.a.run.app';
     let testUrl = 'http://localhost:8080';
-    let currentUrl = url;
+    let currentUrl = testUrl;
 
     let fetchUrl = new URL(currentUrl),
       params = { name: userName, region: userRegion };
@@ -59,31 +114,6 @@ export function fetchProfileData(userId) {
 // a contract like this to integrate with React.
 // Real implementations can be significantly more complex.
 // Don't copy-paste this into your project!
-function wrapPromise(promise) {
-  let status = 'pending';
-  let result;
-  let suspender = promise.then(
-    r => {
-      status = 'success';
-      result = r;
-    },
-    e => {
-      status = 'error';
-      result = e;
-    }
-  );
-  return {
-    read() {
-      if (status === 'pending') {
-        throw suspender;
-      } else if (status === 'error') {
-        throw result;
-      } else if (status === 'success') {
-        return result;
-      }
-    }
-  };
-}
 
 export function fetchUser(userId) {
   console.log('fetch user ' + userId + '...');

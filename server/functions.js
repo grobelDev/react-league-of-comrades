@@ -6,7 +6,7 @@ let apiCalls = 0;
 
 async function mainV2(summonerName, region) {
   try {
-    let gameCount = 3;
+    let gameCount = 1;
 
     let accountId = await getAccountIdByNameV2(summonerName, region);
     let matchlist = await getMatchlistByAccountIdV2(accountId, region);

@@ -27,9 +27,9 @@ const exitDuration = 250;
 
 const Demo = props => {
   const [name, setName] = useState(props.name);
-  const [data, setData] = useState(null);
   const [emails, setEmails] = useState(props.emails);
 
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(null);
   // NON-CUSTOM CODE
   // const messageIds = [...new Array(15).keys()];
@@ -44,56 +44,10 @@ const Demo = props => {
     setEmailIds(props.emailIds);
   }, [props]);
 
-  // useEffect(() => {
-  //   function updateData() {
-  //     if (!data || !name) {
-  //       return;
-  //     }
-
-  //     let formattedName = data.find(
-  //       player => player.name.toLowerCase() === name.toLowerCase()
-  //     );
-
-  //     if (!formattedName) {
-  //       return;
-  //     }
-
-  //     let filteredData = data.filter(
-  //       player => player.name !== formattedName.name
-  //     );
-
-  //     let newData = filteredData.map((player, index) => {
-  //       let message = `Played together ${player.count} times.`;
-  //       let avatar = player.count;
-  //       let id = index + 1;
-  //       let playerObject = {
-  //         title: player.name,
-  //         message: message,
-  //         avatar: avatar,
-  //         id: id
-  //       };
-  //       return playerObject;
-  //     });
-
-  //     // update name formatting
-  //     setName(formattedName.name);
-
-  //     // update data
-  //     setEmailIds([...new Array(newData.length).keys()]);
-  //     setEmails(newData);
-  //   }
-
-  //   updateData();
-  // }, [data]);
-
-  // const [testConsoleValueV2, setTestConsoleValueV2] = useState(0);
-  // setTestConsoleValueV2(testConsoleValueV2 + 1);
-  // let testConsoleValue = 13;
-  // console.log(testConsoleValue)
   return (
     <div>
       <StyledListItem className='p-4 text-2xl font-bold bg-gray-100'>
-        {name} - {data ? 'Data Retrieved' : 'Getting Data'}
+        {name}
         <div className='text-base font-normal'>
           Data from the last {data ? data[0].count : 0} games.
         </div>
