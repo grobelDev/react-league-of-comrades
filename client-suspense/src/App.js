@@ -1,7 +1,17 @@
 import React, { useState, useTransition, Suspense } from 'react';
 import { fetchUserData } from './locApi';
 import styled from 'styled-components';
-// import './css/spinner.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useLocation,
+  Redirect
+} from 'react-router-dom';
+import Header from './Header';
+import SummonerList from './SummonerList';
 
 function Button({ children, onClick }) {
   const DelayedSpinner = styled.div`
@@ -42,7 +52,6 @@ function Button({ children, onClick }) {
       onClick();
     });
   }
-  //
 
   return (
     <>
@@ -111,33 +120,128 @@ function App() {
   }
 
   return (
-    <div className='App'>
-      <div className='text-4xl font-bold text-center text-blue-600'>
-        Tailwind Test
-      </div>
-
-      <Button onClick={handleRefreshClick}>Update</Button>
-      <UserPage resource={resource}></UserPage>
+    <div>
+      <Switch>
+        <Redirect exact from='/' to='/na1/Doublelift' />
+        {/* <Route
+          path='/'
+          exact
+          render={() => {
+            return (
+              <div>
+                <Header />
+                <div className='mt-16'>
+                  <SummonerList></SummonerList>
+                </div>
+              </div>
+            );
+          }}
+        /> */}
+        <Route
+          exact
+          path='/:region/:name'
+          render={() => {
+            return (
+              <div>
+                <Header />
+                <div className='mt-16'>
+                  <div>UserPage</div>
+                  <Button onClick={handleRefreshClick}>Update</Button>
+                  <SummonerListWrapper
+                    resource={resource}
+                  ></SummonerListWrapper>
+                </div>
+              </div>
+            );
+          }}
+        />
+        <Route
+          path='/:region/:name/:comrade'
+          render={() => {
+            return (
+              <div>
+                <Header />
+                <div className='mt-16'>
+                  <div>ComradePage</div>
+                </div>
+              </div>
+            );
+          }}
+        />
+        <Route
+          path='/'
+          render={() => {
+            return <div>404</div>;
+          }}
+        />
+      </Switch>
     </div>
   );
 }
 
 export default App;
 
-class ErrorBoundary extends React.Component {
-  state = { hasError: false, error: null };
-  static getDerivedStateFromError(error) {
-    return {
-      hasError: true,
-      error
+function SummonerListWrapper({ resource }) {
+  return (
+    <ErrorBoundary
+      fallback={
+        <div>
+          Could not find Summoner. <br />
+          Either this Summoner doesn't exist, it's the wrong region, or they
+          changed their name recently.
+        </div>
+      }
+    >
+      <Suspense fallback={<div>Loading Data...</div>}>
+        <SummonerListDetails resource={resource}></SummonerListDetails>
+      </Suspense>
+    </ErrorBoundary>
+  );
+}
+
+function parseData(name, data) {
+  let formattedName = data.find(
+    player => player.name.toLowerCase() === name.toLowerCase()
+  ).name;
+
+  // if (!formattedName) {
+  //   return;
+  // }
+
+  let filteredData = data.filter(player => player.name !== formattedName);
+
+  let newData = filteredData.map((player, index) => {
+    let message = `Played together ${player.count} times.`;
+    let avatar = player.count;
+    let id = index + 1;
+    let playerObject = {
+      title: player.name,
+      message: message,
+      avatar: avatar,
+      id: id
     };
-  }
-  render() {
-    if (this.state.hasError) {
-      return this.props.fallback;
-    }
-    return this.props.children;
-  }
+    return playerObject;
+  });
+
+  let emailIds = [...new Array(newData.length).keys()];
+  let emails = newData;
+
+  // update name formatting
+  return { formattedName, emails, emailIds };
+}
+
+function SummonerListDetails({ resource }) {
+  const name = resource.userName;
+  const data = resource.comrades.read();
+  let parsedData = parseData(name, data);
+
+  return (
+    <SummonerList
+      name={parsedData.formattedName}
+      emails={parsedData.emails}
+      emailIds={parsedData.emailIds}
+    ></SummonerList>
+  );
 }
 
 function UserPage({ resource }) {
@@ -163,3 +267,32 @@ function UserDetails({ resource }) {
 
   return <div>{JSON.stringify(comrades)}</div>;
 }
+
+class ErrorBoundary extends React.Component {
+  state = { hasError: false, error: null };
+  static getDerivedStateFromError(error) {
+    return {
+      hasError: true,
+      error
+    };
+  }
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
+// ARCHIVE
+// function oldReturn() {
+//   return (
+//     <div>
+//       <div className='text-4xl font-bold text-center text-blue-600'>
+//         Tailwind Test
+//       </div>
+//       <Button onClick={handleRefreshClick}>Update</Button>
+//       <UserPage resource={resource}></UserPage>
+//     </div>
+//   );
+// }

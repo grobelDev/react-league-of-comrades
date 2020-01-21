@@ -300,14 +300,6 @@ function fetchDataV3(name, region) {
     });
 }
 
-function SuspensePage({ resource }) {
-  return (
-    <Suspense fallback={<h1>Loading profile...</h1>}>
-      <DataDetails resource={resource}></DataDetails>
-    </Suspense>
-  );
-}
-
 function DataDetails({ resource }) {
   const name = resource;
   return <div>{name}</div>;
