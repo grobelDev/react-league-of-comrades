@@ -129,69 +129,75 @@ function getNextIndex(id) {
 const initialResource = fetchUserData('doublelift', 'na1');
 
 function App() {
-  // const [data, setData] = useState(null);
+  const [startTransition, isPending] = useTransition({
+    // Wait 10 seconds before fallback
+    timeoutMs: 10000
+  });
 
-  // let UserMatch = useRouteMatch('/:region/:name');
-  // const params = UserMatch.params;
-  // const userName = params.name;
-  // const userRegion = params.region;
-  // const initialResource2 = fetchUserData(userName, userRegion);
-  // console.log('rendering...');
-  // let ComradeMatch = useRouteMatch('/:region/:name/:comrade');
-
-  let UserMatch = useRouteMatch('/:region/:name');
-
+  // state
   const [resource, setResource] = useState(initialResource);
-  // const [matchWatcher, setMatchWatcher] = useState(
-  //   useRouteMatch('/:region/:name')
-  // );
+  const [resourceStore, setResourceStore] = useState({});
 
+  // hooks
+  let UserMatch = useRouteMatch('/:region/:name');
   let location = useLocation();
 
-  useEffect(() => {
-    // console.log(location);
-    // console.log(routeObject);
+  // if (dataStore[name]) {
+  //   console.log('getting stored data');
+  //   setLoading(false);
+  //   setData(dataStore[name].data);
+  //   console.log(dataStore);
+  //   return;
+  // }
+  // let comradesPromise = fetchComrades(userName, userRegion);
+  // return {
+  //   userName,
+  //   userRegion,
+  //   comrades: wrapPromise(comradesPromise)
+  // };
+  // if (!dataStore[name]) {
+  //   setDataStore(dataStore => {
+  //     let newDataStore = { ...dataStore };
+  //     newDataStore[name] = {
+  //       name: name,
+  //       region: region,
+  //       data: myJson
+  //     };
+  //     return newDataStore;
+  //   });
+  // }
 
-    // setMatchWatcher(useRouteMatch('/:region/:name'));
+  useEffect(() => {
     if (UserMatch.isExact) {
       const params = UserMatch.params;
       const userName = params.name;
       const userRegion = params.region;
-      console.log();
-      const resource = fetchUserData(userName, userRegion);
-      console.log(resource);
-      setResource(resource);
+
+      if (resourceStore[userName]) {
+        // setData
+        console.log('already stored this data!');
+        console.log(resourceStore);
+        let cachedResource = resourceStore[userName].resource;
+        startTransition(() => {
+          setResource(cachedResource);
+        });
+      } else {
+        const resource = fetchUserData(userName, userRegion);
+        startTransition(() => {
+          setResourceStore(resourceStore => {
+            console.log('storing data!');
+            let newResourceStore = { ...resourceStore };
+            newResourceStore[userName] = {
+              userName: userName,
+              resource: resource
+            };
+            return newResourceStore;
+          });
+          setResource(resource);
+        });
+      }
     }
-    // if (UserMatch.isExact) {
-    // } else if (ComradeMatch.isExact) {
-    //   console.log('ComradeMatch');
-    // }
   }, [location]);
-
-  // useEffect(() => {
-  //   // console.log(matchWatcher);
-  //   // const params = matchWatcher.params;
-  //   // const userName = params.name;
-  //   // const userRegion = params.region;
-  //   // const newResource = fetchUserData(userName, userRegion);
-  //   // setResource(newResource);
-  // }, [matchWatcher]);
-
-  // console.log(UserMatch);
-  // console.log(ComradeMatch);
-  // console.log(match.params);
-  // console.log(match.params);
-  // const { name, region, comrade } = useParams();
-  // console.log(name, region, comrade);
-  // if (fetchObject.name !== name || fetchObject.region !== region) {
-  //   setFetchObject({
-  //     name: name,
-  //     region: region,
-  //     comrade: comrade
-  //   });
-  // }
-
-  // return null;
 
   function handleRefreshClick() {
     const currentIndex = testData.findIndex(
@@ -289,15 +295,11 @@ function parseData(name, data) {
     player => player.name.toLowerCase() === name.toLowerCase()
   ).name;
 
-  // if (!formattedName) {
-  //   return;
-  // }
-
   let filteredData = data.filter(player => player.name !== formattedName);
 
   let newData = filteredData.map((player, index) => {
     let message = `Played together ${player.count} times.`;
-    let avatar = player.count;
+    let avatar = player.name[0];
     let id = index + 1;
     let playerObject = {
       title: player.name,
