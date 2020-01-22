@@ -193,6 +193,8 @@ function App() {
             };
             return newResourceStore;
           });
+        });
+        startTransition(() => {
           setResource(resource);
         });
       }
