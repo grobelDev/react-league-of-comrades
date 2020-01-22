@@ -16,6 +16,7 @@ import { useDrag } from 'react-use-gesture';
 //   range
 // } from '../utilities';
 import { BrowserRouter as Router, Link, useHistory } from 'react-router-dom';
+import FadeIn from 'react-fade-in';
 
 const actionWidth = 100;
 const threshold = 15;

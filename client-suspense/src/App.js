@@ -159,14 +159,15 @@ function App() {
     const params = UserMatch.params;
     const userName = params.name;
     const userRegion = params.region;
-    const newResource = fetchUserData(userName, userRegion);
 
     if (resourceStore[userName]) {
-      let cachedResource = resourceStore[userName].resource;
       startTransition(() => {
+        let cachedResource = resourceStore[userName].resource;
+
         setResource(cachedResource);
       });
     } else {
+      const newResource = fetchUserData(userName, userRegion);
       startTransition(() => {
         setResourceStore(resourceStore => {
           let newResourceStore = { ...resourceStore };
@@ -298,7 +299,13 @@ function SummonerListWrapper({ resource }) {
         </div>
       }
     >
-      <Suspense fallback={<div>Loading Data...</div>}>
+      <Suspense
+        fallback={
+          <FadeIn>
+            <div>Loading Data...</div>
+          </FadeIn>
+        }
+      >
         <SummonerListDetails resource={resource}></SummonerListDetails>
       </Suspense>
     </ErrorBoundary>
@@ -333,18 +340,18 @@ function parseData(name, data) {
 }
 
 function SummonerListDetails({ resource }) {
-  const name = resource.userName;
+  let name = resource.userName;
   const data = resource.comrades.read();
   let parsedData = parseData(name, data);
 
   return (
-    <FadeIn>
-      <SummonerList
-        name={parsedData.formattedName}
-        emails={parsedData.emails}
-        emailIds={parsedData.emailIds}
-      ></SummonerList>
-    </FadeIn>
+    // <FadeIn>
+    <SummonerList
+      name={parsedData.formattedName}
+      emails={parsedData.emails}
+      emailIds={parsedData.emailIds}
+    ></SummonerList>
+    // </FadeIn>
   );
 }
 
