@@ -14,6 +14,8 @@ import {
 import Header from './Header';
 import SummonerList from './SummonerList';
 
+import FadeIn from 'react-fade-in';
+
 function Button({ children, onClick }) {
   const DelayedSpinner = styled.div`
     animation: 0s linear 0.5s forwards makeVisible;
@@ -124,6 +126,17 @@ function getNextIndex(id) {
 //   console.log('asdflajfdslk');
 //   return resource;
 // }
+const TestDiv = styled.div`
+  visibility: visible;
+  -webkit-transform: translateY(0) scale(1);
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  -webkit-transition: -webkit-transform 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s,
+    opacity 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s;
+  transition: transform 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s,
+    opacity 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s;
+`;
 
 // let initialResource2 = useFetchResource();
 const initialResource = fetchUserData('doublelift', 'na1');
@@ -172,32 +185,45 @@ function App() {
       const params = UserMatch.params;
       const userName = params.name;
       const userRegion = params.region;
+      const resource = fetchUserData(userName, userRegion);
 
-      if (resourceStore[userName]) {
-        // setData
-        console.log('already stored this data!');
-        console.log(resourceStore);
-        let cachedResource = resourceStore[userName].resource;
-        startTransition(() => {
-          setResource(cachedResource);
-        });
-      } else {
-        const resource = fetchUserData(userName, userRegion);
-        startTransition(() => {
-          setResourceStore(resourceStore => {
-            console.log('storing data!');
-            let newResourceStore = { ...resourceStore };
-            newResourceStore[userName] = {
-              userName: userName,
-              resource: resource
-            };
-            return newResourceStore;
-          });
-        });
-        startTransition(() => {
-          setResource(resource);
-        });
-      }
+      // if (resourceStore[userName]) {
+      // setData
+      // console.log('already stored this data!');
+      // console.log(resourceStore);
+      // const timer = setTimeout(() => {
+      //   // setCount('Timeout called!');
+      //   let cachedResource = resourceStore[userName].resource;
+      //   startTransition(() => {
+      //     setResource(cachedResource);
+      //   });
+      // }, 300);
+      // () => clearTimeout(timer);
+
+      // startTransition(() => {
+      // let cachedResource = resourceStore[userName].resource;
+
+      // function testTimeout() {
+      // console.log('testing timeout');
+      // setResource(cachedResource);
+      // }
+      // setTimeout(testTimeout, 5000);
+
+      // });
+      // } else {
+      // setResourceStore(resourceStore => {
+      //   let newResourceStore = { ...resourceStore };
+      //   newResourceStore[userName] = {
+      //     userName: userName,
+      //     resource: resource
+      //   };
+      //   return newResourceStore;
+      // });
+      // });
+      startTransition(() => {
+        setResource(resource);
+      });
+      // }
     }
   }, [location]);
 
@@ -238,8 +264,13 @@ function App() {
               <div>
                 <Header />
                 <div className='mt-16'>
-                  <div>UserPage</div>
-                  <Button onClick={handleRefreshClick}>Update</Button>
+                  {/* <div>UserPage</div> */}
+                  <FadeIn>
+                    <TestDiv>
+                      <p>{JSON.stringify(location)}</p>
+                    </TestDiv>
+                  </FadeIn>
+                  {/* <Button onClick={handleRefreshClick}>Update</Button> */}
                   <SummonerListWrapper
                     resource={resource}
                   ></SummonerListWrapper>
@@ -325,11 +356,13 @@ function SummonerListDetails({ resource }) {
   let parsedData = parseData(name, data);
 
   return (
-    <SummonerList
-      name={parsedData.formattedName}
-      emails={parsedData.emails}
-      emailIds={parsedData.emailIds}
-    ></SummonerList>
+    <FadeIn>
+      <SummonerList
+        name={parsedData.formattedName}
+        emails={parsedData.emails}
+        emailIds={parsedData.emailIds}
+      ></SummonerList>
+    </FadeIn>
   );
 }
 
