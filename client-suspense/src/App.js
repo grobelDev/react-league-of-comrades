@@ -126,17 +126,17 @@ function getNextIndex(id) {
 //   console.log('asdflajfdslk');
 //   return resource;
 // }
-const TestDiv = styled.div`
-  visibility: visible;
-  -webkit-transform: translateY(0) scale(1);
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  opacity: 1;
-  -webkit-transition: -webkit-transform 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s,
-    opacity 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s;
-  transition: transform 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s,
-    opacity 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s;
-`;
+// const TestDiv = styled.div`
+//   visibility: visible;
+//   -webkit-transform: translateY(0) scale(1);
+//   opacity: 1;
+//   transform: translateY(0) scale(1);
+//   opacity: 1;
+//   -webkit-transition: -webkit-transform 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s,
+//     opacity 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s;
+//   transition: transform 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s,
+//     opacity 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s;
+// `;
 
 // let initialResource2 = useFetchResource();
 const initialResource = fetchUserData('doublelift', 'na1');
@@ -155,77 +155,47 @@ function App() {
   let UserMatch = useRouteMatch('/:region/:name');
   let location = useLocation();
 
-  // if (dataStore[name]) {
-  //   console.log('getting stored data');
-  //   setLoading(false);
-  //   setData(dataStore[name].data);
-  //   console.log(dataStore);
-  //   return;
-  // }
-  // let comradesPromise = fetchComrades(userName, userRegion);
-  // return {
-  //   userName,
-  //   userRegion,
-  //   comrades: wrapPromise(comradesPromise)
-  // };
-  // if (!dataStore[name]) {
-  //   setDataStore(dataStore => {
-  //     let newDataStore = { ...dataStore };
-  //     newDataStore[name] = {
-  //       name: name,
-  //       region: region,
-  //       data: myJson
-  //     };
-  //     return newDataStore;
-  //   });
-  // }
-
   useEffect(() => {
-    if (UserMatch.isExact) {
-      const params = UserMatch.params;
-      const userName = params.name;
-      const userRegion = params.region;
-      const resource = fetchUserData(userName, userRegion);
+    const params = UserMatch.params;
+    const userName = params.name;
+    const userRegion = params.region;
+    const newResource = fetchUserData(userName, userRegion);
 
-      // if (resourceStore[userName]) {
-      // setData
-      // console.log('already stored this data!');
-      // console.log(resourceStore);
-      // const timer = setTimeout(() => {
-      //   // setCount('Timeout called!');
-      //   let cachedResource = resourceStore[userName].resource;
-      //   startTransition(() => {
-      //     setResource(cachedResource);
-      //   });
-      // }, 300);
-      // () => clearTimeout(timer);
-
-      // startTransition(() => {
-      // let cachedResource = resourceStore[userName].resource;
-
-      // function testTimeout() {
-      // console.log('testing timeout');
-      // setResource(cachedResource);
-      // }
-      // setTimeout(testTimeout, 5000);
-
-      // });
-      // } else {
-      // setResourceStore(resourceStore => {
-      //   let newResourceStore = { ...resourceStore };
-      //   newResourceStore[userName] = {
-      //     userName: userName,
-      //     resource: resource
-      //   };
-      //   return newResourceStore;
-      // });
-      // });
+    if (resourceStore[userName]) {
+      let cachedResource = resourceStore[userName].resource;
       startTransition(() => {
-        setResource(resource);
+        setResource(cachedResource);
       });
-      // }
+    } else {
+      startTransition(() => {
+        setResourceStore(resourceStore => {
+          let newResourceStore = { ...resourceStore };
+          newResourceStore[userName] = {
+            userName: userName,
+            resource: newResource
+          };
+          return newResourceStore;
+        });
+      });
+      startTransition(() => {
+        setResource(newResource);
+      });
     }
+
+    console.log(resourceStore);
   }, [location]);
+
+  // function handleStateClick() {
+  //   if (UserMatch.isExact) {
+  //     const params = UserMatch.params;
+  //     const userName = params.name;
+  //     const userRegion = params.region;
+  //     const resource = fetchUserData(userName, userRegion);
+  //     startTransition(() => {
+  //       setResource(resource);
+  //     });
+  //   }
+  // }
 
   function handleRefreshClick() {
     const currentIndex = testData.findIndex(
@@ -237,6 +207,19 @@ function App() {
       fetchUserData(testData[nextIndex].name, testData[nextIndex].region)
     );
   }
+
+  // function SummonerListWithParamsVX() {
+  //   let { name, region } = useParams();
+  //   // console.log(name, region);
+  //   const userName = name;
+  //   const userRegion = region;
+  //   const divResource = fetchUserData(userName, userRegion);
+  //   // startTransition(() => {
+  //   //   setResource(divResource);
+  //   // });
+
+  //   return <SummonerListWrapper resource={divResource}></SummonerListWrapper>;
+  // }
 
   return (
     <div>
@@ -266,11 +249,10 @@ function App() {
                 <div className='mt-16'>
                   {/* <div>UserPage</div> */}
                   <FadeIn>
-                    <TestDiv>
-                      <p>{JSON.stringify(location)}</p>
-                    </TestDiv>
+                    <p>{JSON.stringify(location)}</p>
                   </FadeIn>
-                  {/* <Button onClick={handleRefreshClick}>Update</Button> */}
+                  {/* <Button onClick={handleStateClick}>Update</Button> */}
+                  {/* <SummonerListWithParamsVX></SummonerListWithParamsVX> */}
                   <SummonerListWrapper
                     resource={resource}
                   ></SummonerListWrapper>
