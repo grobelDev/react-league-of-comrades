@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 import { StyledCollapseHandler, StyledListItem } from './styled-components';
-import { useLocation } from 'react-router-dom';
 
 const StyledEmailList = styled.ul``;
 
