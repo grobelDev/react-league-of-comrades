@@ -15,8 +15,8 @@ import FadeIn from 'react-fade-in';
 
 import Header from './Header';
 import SummonerList from './SummonerList';
-import SummonerListFallback from './SummonerListFallback';
-import SummonerListV2 from './SummonerListV2';
+// import SummonerListFallback from './SummonerListFallback';
+// import SummonerListV2 from './SummonerListV2';
 import ErrorBoundary from './ErrorBoundary';
 import Spinner from './Spinner';
 import MatchHistoryWrapper from './MatchHistoryWrapper';
@@ -39,21 +39,6 @@ const Spinner2 = styled.div`
     }
   }
 `;
-
-let testData = [
-  {
-    name: 'doublelift',
-    region: 'na1'
-  },
-  {
-    name: 'anti213',
-    region: 'na1'
-  },
-  {
-    name: 'kamikazetomato',
-    region: 'na1'
-  }
-];
 
 function getNextIndex(id) {
   return id === 2 ? 0 : id + 1;
@@ -138,28 +123,28 @@ function App() {
     }
   }, [location]);
 
-  function handleStateClick() {
-    if (UserMatch.isExact) {
-      const params = UserMatch.params;
-      const userName = params.name;
-      const userRegion = params.region;
-      const resource = fetchUserData(userName, userRegion);
-      startTransition(() => {
-        setResource(resource);
-      });
-    }
-  }
+  // function handleStateClick() {
+  //   if (UserMatch.isExact) {
+  //     const params = UserMatch.params;
+  //     const userName = params.name;
+  //     const userRegion = params.region;
+  //     const resource = fetchUserData(userName, userRegion);
+  //     startTransition(() => {
+  //       setResource(resource);
+  //     });
+  //   }
+  // }
 
-  function handleRefreshClick() {
-    const currentIndex = testData.findIndex(
-      user => user.name.toUpperCase() === resource.userName.toUpperCase()
-    );
-    console.log(currentIndex);
-    const nextIndex = getNextIndex(currentIndex);
-    setResource(
-      fetchUserData(testData[nextIndex].name, testData[nextIndex].region)
-    );
-  }
+  // function handleRefreshClick() {
+  //   const currentIndex = testData.findIndex(
+  //     user => user.name.toUpperCase() === resource.userName.toUpperCase()
+  //   );
+  //   console.log(currentIndex);
+  //   const nextIndex = getNextIndex(currentIndex);
+  //   setResource(
+  //     fetchUserData(testData[nextIndex].name, testData[nextIndex].region)
+  //   );
+  // }
 
   // function SummonerListWithParamsVX() {
   //   let { name, region } = useParams();
@@ -369,38 +354,38 @@ function SummonerListDetails({ resource }) {
 //   );
 // }
 
-function SummonerListDetailsV2({ resource, isPending }) {
-  // const name = resource.userName;
-  // const data = resource.comrades.read();
-  // let parsedData = parseData(name, data);
+// function SummonerListDetailsV2({ resource, isPending }) {
+//   // const name = resource.userName;
+//   // const data = resource.comrades.read();
+//   // let parsedData = parseData(name, data);
 
-  return (
-    // <FadeIn>
-    <SummonerListV2 resource={resource} isPending={isPending}></SummonerListV2>
-    // </FadeIn>
-  );
-}
+//   return (
+//     // <FadeIn>
+//     <SummonerListV2 resource={resource} isPending={isPending}></SummonerListV2>
+//     // </FadeIn>
+//   );
+// }
 
-function SummonerListFallbackDetails() {
-  let name = 'Loading...';
-  let emailIds = [...new Array(15).keys()];
-  let emails = emailIds.map((number, index) => {
-    let playerObject = {
-      title: '',
-      message: '',
-      avatar: '',
-      id: index + 1
-    };
-    return playerObject;
-  });
-  return (
-    <SummonerListFallback
-      name={name}
-      emails={emails}
-      emailIds={emailIds}
-    ></SummonerListFallback>
-  );
-}
+// function SummonerListFallbackDetails() {
+//   let name = 'Loading...';
+//   let emailIds = [...new Array(15).keys()];
+//   let emails = emailIds.map((number, index) => {
+//     let playerObject = {
+//       title: '',
+//       message: '',
+//       avatar: '',
+//       id: index + 1
+//     };
+//     return playerObject;
+//   });
+//   return (
+//     <SummonerListFallback
+//       name={name}
+//       emails={emails}
+//       emailIds={emailIds}
+//     ></SummonerListFallback>
+//   );
+// }
 
 // ARCHIVE
 // function oldReturn() {
