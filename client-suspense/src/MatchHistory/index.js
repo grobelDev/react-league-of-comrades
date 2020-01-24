@@ -146,7 +146,7 @@ function MatchHistoryHero({ name, comrade }) {
   return (
     <div>
       <div className='flex justify-center'>
-        <div className='flex justify-center w-3/4 p-4 mb-8 bg-white border border-gray-600 rounded'>
+        <div className='flex justify-center w-3/4 p-4 my-8 bg-white border border-gray-600 rounded'>
           <div className='text-3xl font-light leading-tight sm:text-4xl md:text-5xl xl:text-4xl'>
             <div className='flex flex-col'>
               <span className='flex flex-row items-center justify-center font-normal text-center text-gray-900'>
