@@ -134,13 +134,13 @@ const MatchHistory = props => {
               matchHistory={matchHistory}
             ></SingleMatchDetailsMain>
           </div>
-          <div>
+          {/* <div>
             <MatchLayout matchHistory={matchHistory}>
               <div className='flex flex-col'>
                 <MatchWrapper></MatchWrapper>
               </div>
             </MatchLayout>
-          </div>
+          </div> */}
         </div>
       ) : null}
     </div>
@@ -174,7 +174,7 @@ function MatchHistoryHero({ name, comrade }) {
 function SingleMatchDetailsMain({ name, comrade, matchHistory }) {
   console.log('here is where the data matters', name, comrade, matchHistory);
   return (
-    <MatchLayout>
+    <MatchLayout matchHistory={matchHistory}>
       <div className='flex flex-col'>
         <MatchWrapper
           name={name}
@@ -186,12 +186,28 @@ function SingleMatchDetailsMain({ name, comrade, matchHistory }) {
   );
 }
 
-function MatchLayout({ children }) {
+function MatchLayout({ children, matchHistory }) {
+  if (!matchHistory) {
+    return null;
+  }
+
+  let gameCreation = matchHistory[0].gameCreation;
+  let dateTime = getDateTime(gameCreation);
+  let dateLeft = gameCreation.toDateString().split(' ');
+  dateLeft.pop();
+
+  let monthDayDate = dateLeft.join(' ');
+
+  // let trueDate = dateLeft.join(' ') + '  ' + dateTime;
+  // let trueDate2 = trueDate.replace(/ /g, '\u00a0');
+
   return (
     <div>
       <div className='relative w-full pb-10 mx-auto bg-gray-200 lg:px-8 max-w-screen-xl md:pb-12'>
         <div className='flex'>
-          <div className='flex flex-col justify-center px-2'>Jan 23</div>
+          <div className='flex flex-col justify-center px-2'>
+            {monthDayDate}
+          </div>
           <div className='flex-1 px-2 my-8 border-b-2 border-gray-500'></div>
         </div>
         <div className='overflow-hidden bg-white border-t border-b border-gray-400 lg:border-gray-200 lg:rounded lg:shadow-md'>
@@ -200,6 +216,17 @@ function MatchLayout({ children }) {
       </div>
     </div>
   );
+
+  function getDateTime(date) {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    let strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
 }
 
 function MatchWrapper({ name, comrade, matchHistory }) {
@@ -220,41 +247,23 @@ function MatchWrapper({ name, comrade, matchHistory }) {
 
     let queueType = matchHistory[0].queueObject.description;
     let gameDuration = matchHistory[0].gameDuration;
-    let gameCreation = matchHistory[0].gameCreation;
 
-    let dateTime = getDateTime(gameCreation);
-    let dateLeft = gameCreation.toDateString().split(' ');
-    dateLeft.pop();
-    let trueDate = dateLeft.join(' ') + '  ' + dateTime;
-    let trueDate2 = trueDate.replace(/ /g, '\u00a0');
+    // let betterQueueType = queueType.replace(/\s(games+)$\s+/, '');
+    // console.log(better)
 
     return (
       <div className='flex items-center justify-between py-3 text-sm border-b border-gray-200'>
-        <div className='flex flex-1 min-w-0 px-2 lg:px-3'>
-          {/* Ranked Solo */}
-          {/* {gameType} */}
-          {queueType}
-        </div>
+        <div className='flex flex-1 min-w-0 px-2 lg:px-3'>{queueType}</div>
         <div className='flex items-center flex-shrink-0 px-3 ml-6'>
-          {/* {trueDate2} */}
           {gameDuration}
         </div>
       </div>
     );
-
-    function getDateTime(date) {
-      let hours = date.getHours();
-      let minutes = date.getMinutes();
-      let ampm = hours >= 12 ? 'PM' : 'AM';
-      hours = hours % 12;
-      hours = hours ? hours : 12; // the hour '0' should be '12'
-      minutes = minutes < 10 ? '0' + minutes : minutes;
-      let strTime = hours + ':' + minutes + ' ' + ampm;
-      return strTime;
-    }
   }
 
   function MatchDetails({ name, matchHistory }) {
+    // matchHistory[0];
+
     return (
       <div>
         <div className='flex'>
