@@ -15,155 +15,62 @@ import FadeIn from 'react-fade-in';
 
 import Header from './Header';
 import SummonerList from './SummonerList';
-// import SummonerListFallback from './SummonerListFallback';
-// import SummonerListV2 from './SummonerListV2';
 import ErrorBoundary from './ErrorBoundary';
 import Spinner from './Spinner';
 import MatchHistoryWrapper from './MatchHistoryWrapper';
+import SplashPage from './SplashPage';
 
-const Spinner2 = styled.div`
-  border: 8px solid #f3f3f3; /* Light grey */
-  border-top: 8px solid #3498db; /* Blue */
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  opacity: 1;
-  animation: spin 2s linear infinite;
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-`;
-
-function getNextIndex(id) {
-  return id === 2 ? 0 : id + 1;
-}
-
-// function getParams()
-// function useFetch() {
-//   let UserMatch = useRouteMatch('/:region/:name');
-//   let ComradeMatch = useRouteMatch('/:region/:name/:comrade');
-//   const params = UserMatch.params;
-//   const userName = params.name;
-//   const userRegion = params.region;
-//   const resource = fetchUserData(userName, userRegion);
-//   return resource;
-// }
-
-// function useFetchResource() {
-//   let UserMatch = useRouteMatch('/:region/:name');
-//   const params = UserMatch.params;
-//   const userName = params.name;
-//   const userRegion = params.region;
-//   const resource = fetchUserData(userName, userRegion);
-//   console.log('asdflajfdslk');
-//   return resource;
-// }
-// const TestDiv = styled.div`
-//   visibility: visible;
-//   -webkit-transform: translateY(0) scale(1);
-//   opacity: 1;
-//   transform: translateY(0) scale(1);
-//   opacity: 1;
-//   -webkit-transition: -webkit-transform 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s,
-//     opacity 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s;
-//   transition: transform 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s,
-//     opacity 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s;
-// `;
-
-// let initialResource2 = useFetchResource();
 const initialResource = fetchUserData('doublelift', 'na1');
 
 function App() {
-  const [startTransition, isPending] = useTransition({
-    // Wait 10 seconds before fallback
-    timeoutMs: 10000
-  });
-
   // state
   const [resource, setResource] = useState(initialResource);
   const [resourceStore, setResourceStore] = useState({});
   const [transitionResource, setTransitionResource] = useState(null);
+  const [startTransition, isPending] = useTransition({
+    // Wait 10 seconds before fallback
+    timeoutMs: 10000
+  });
 
   // hooks
   let UserMatch = useRouteMatch('/:region/:name');
   let location = useLocation();
 
   useEffect(() => {
-    const params = UserMatch.params;
-    const userName = params.name;
-    const userRegion = params.region;
+    if (UserMatch) {
+      const params = UserMatch.params;
+      const userName = params.name;
+      const userRegion = params.region;
 
-    if (resourceStore[userName]) {
-      startTransition(() => {
-        let cachedResource = resourceStore[userName].resource;
-        setResource(cachedResource);
-      });
-    } else {
-      setTransitionResource(resource);
-      const newResource = fetchUserData(userName, userRegion);
-      startTransition(() => {
-        setResourceStore(resourceStore => {
-          let newResourceStore = { ...resourceStore };
-          newResourceStore[userName] = {
-            userName: userName,
-            resource: newResource
-          };
-          return newResourceStore;
+      if (resourceStore[userName]) {
+        startTransition(() => {
+          let cachedResource = resourceStore[userName].resource;
+          setResource(cachedResource);
         });
-      });
-      startTransition(() => {
-        setResource(newResource);
-      });
+      } else {
+        setTransitionResource(resource);
+        const newResource = fetchUserData(userName, userRegion);
+        startTransition(() => {
+          setResourceStore(resourceStore => {
+            let newResourceStore = { ...resourceStore };
+            newResourceStore[userName] = {
+              userName: userName,
+              resource: newResource
+            };
+            return newResourceStore;
+          });
+        });
+        startTransition(() => {
+          setResource(newResource);
+        });
+      }
     }
   }, [location]);
-
-  // function handleStateClick() {
-  //   if (UserMatch.isExact) {
-  //     const params = UserMatch.params;
-  //     const userName = params.name;
-  //     const userRegion = params.region;
-  //     const resource = fetchUserData(userName, userRegion);
-  //     startTransition(() => {
-  //       setResource(resource);
-  //     });
-  //   }
-  // }
-
-  // function handleRefreshClick() {
-  //   const currentIndex = testData.findIndex(
-  //     user => user.name.toUpperCase() === resource.userName.toUpperCase()
-  //   );
-  //   console.log(currentIndex);
-  //   const nextIndex = getNextIndex(currentIndex);
-  //   setResource(
-  //     fetchUserData(testData[nextIndex].name, testData[nextIndex].region)
-  //   );
-  // }
-
-  // function SummonerListWithParamsVX() {
-  //   let { name, region } = useParams();
-  //   // console.log(name, region);
-  //   const userName = name;
-  //   const userRegion = region;
-  //   const divResource = fetchUserData(userName, userRegion);
-  //   // startTransition(() => {
-  //   //   setResource(divResource);
-  //   // });
-
-  //   return <SummonerListWrapper resource={divResource}></SummonerListWrapper>;
-  // }
 
   return (
     <div>
       <Switch>
-        <Redirect exact from='/' to='/na1/Doublelift' />
-        {/* <Route
+        <Route
           path='/'
           exact
           render={() => {
@@ -171,12 +78,13 @@ function App() {
               <div>
                 <Header />
                 <div className='mt-16'>
-                  <SummonerList></SummonerList>
+                  {/* <SummonerList></SummonerList> */}
+                  <SplashPage></SplashPage>
                 </div>
               </div>
             );
           }}
-        /> */}
+        />
         <Route
           exact
           path='/:region/:name'
@@ -232,38 +140,6 @@ function App() {
 }
 
 export default App;
-
-// function MatchHistoryWrapper({ resource }) {
-//   return (
-//     <Suspense
-//       fallback={
-//         <FadeIn>
-//           <Spinner></Spinner>
-//         </FadeIn>
-//       }
-//     >
-//       <MatchHistoryDetails resource={resource}></MatchHistoryDetails>
-//     </Suspense>
-//   );
-// }
-
-// function MatchHistoryDetails({ resource }) {
-//   let { comrade } = useParams();
-
-//   const name = resource.userName;
-//   const data = resource.comrades.read();
-//   let parsedData = parseData(name, data);
-
-//   return (
-//     <FadeIn>
-//       <MatchHistory
-//         name={parsedData.formattedName}
-//         comrade={comrade}
-//         data={data}
-//       ></MatchHistory>
-//     </FadeIn>
-//   );
-// }
 
 function SummonerListWrapper({ resource }) {
   return (
@@ -507,5 +383,130 @@ function SummonerListDetails({ resource }) {
 //         ) : null}
 //       </div>
 //     </>
+//   );
+// }
+
+// function handleStateClick() {
+//   if (UserMatch.isExact) {
+//     const params = UserMatch.params;
+//     const userName = params.name;
+//     const userRegion = params.region;
+//     const resource = fetchUserData(userName, userRegion);
+//     startTransition(() => {
+//       setResource(resource);
+//     });
+//   }
+// }
+
+// function handleRefreshClick() {
+//   const currentIndex = testData.findIndex(
+//     user => user.name.toUpperCase() === resource.userName.toUpperCase()
+//   );
+//   console.log(currentIndex);
+//   const nextIndex = getNextIndex(currentIndex);
+//   setResource(
+//     fetchUserData(testData[nextIndex].name, testData[nextIndex].region)
+//   );
+// }
+
+// function SummonerListWithParamsVX() {
+//   let { name, region } = useParams();
+//   // console.log(name, region);
+//   const userName = name;
+//   const userRegion = region;
+//   const divResource = fetchUserData(userName, userRegion);
+//   // startTransition(() => {
+//   //   setResource(divResource);
+//   // });
+
+//   return <SummonerListWrapper resource={divResource}></SummonerListWrapper>;
+// }
+
+// const Spinner2 = styled.div`
+//   border: 8px solid #f3f3f3; /* Light grey */
+//   border-top: 8px solid #3498db; /* Blue */
+//   border-radius: 50%;
+//   width: 40px;
+//   height: 40px;
+//   opacity: 1;
+//   animation: spin 2s linear infinite;
+
+//   @keyframes spin {
+//     0% {
+//       transform: rotate(0deg);
+//     }
+//     100% {
+//       transform: rotate(360deg);
+//     }
+//   }
+// `;
+
+// function getNextIndex(id) {
+//   return id === 2 ? 0 : id + 1;
+// }
+
+// function getParams()
+// function useFetch() {
+//   let UserMatch = useRouteMatch('/:region/:name');
+//   let ComradeMatch = useRouteMatch('/:region/:name/:comrade');
+//   const params = UserMatch.params;
+//   const userName = params.name;
+//   const userRegion = params.region;
+//   const resource = fetchUserData(userName, userRegion);
+//   return resource;
+// }
+
+// function useFetchResource() {
+//   let UserMatch = useRouteMatch('/:region/:name');
+//   const params = UserMatch.params;
+//   const userName = params.name;
+//   const userRegion = params.region;
+//   const resource = fetchUserData(userName, userRegion);
+//   console.log('asdflajfdslk');
+//   return resource;
+// }
+// const TestDiv = styled.div`
+//   visibility: visible;
+//   -webkit-transform: translateY(0) scale(1);
+//   opacity: 1;
+//   transform: translateY(0) scale(1);
+//   opacity: 1;
+//   -webkit-transition: -webkit-transform 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s,
+//     opacity 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s;
+//   transition: transform 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s,
+//     opacity 0.7s cubic-bezier(0.6, 0.2, 0.1, 1) 0.1s;
+// `;
+
+// let initialResource2 = useFetchResource();
+
+// function MatchHistoryWrapper({ resource }) {
+//   return (
+//     <Suspense
+//       fallback={
+//         <FadeIn>
+//           <Spinner></Spinner>
+//         </FadeIn>
+//       }
+//     >
+//       <MatchHistoryDetails resource={resource}></MatchHistoryDetails>
+//     </Suspense>
+//   );
+// }
+
+// function MatchHistoryDetails({ resource }) {
+//   let { comrade } = useParams();
+
+//   const name = resource.userName;
+//   const data = resource.comrades.read();
+//   let parsedData = parseData(name, data);
+
+//   return (
+//     <FadeIn>
+//       <MatchHistory
+//         name={parsedData.formattedName}
+//         comrade={comrade}
+//         data={data}
+//       ></MatchHistory>
+//     </FadeIn>
 //   );
 // }
