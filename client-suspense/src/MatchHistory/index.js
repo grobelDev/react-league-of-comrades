@@ -5,129 +5,144 @@ const MatchHistory = props => {
   const [name, setName] = useState('');
   const [comrade, setComrade] = useState('');
   const [data, setData] = useState([]);
-  const [matchHistory, setMatchHistory] = useState({});
+  const [matchHistory, setMatchHistory] = useState(null);
   let queues = require('./queues.json');
 
   useEffect(() => {
     setName(props.name);
     setComrade(props.comrade);
-    setData(props.data);
+    setMatchHistory(props.matchHistory);
+    // setData(props.data);
   }, [props]);
 
-  useEffect(() => {
-    getMatchOutcomes();
-  }, [data]);
+  // useEffect(() => {
+  //   getMatchOutcomes();
+  // }, [data]);
 
-  function getMatchOutcomes() {
-    if (!data) {
-      return;
-    }
+  // function getMatchOutcomes() {
+  //   if (!data) {
+  //     return;
+  //   }
 
-    let comradeData = data.find(
-      _comrade => _comrade.name.toLowerCase() === comrade.toLowerCase()
-    );
+  //   let comradeData = data.find(
+  //     _comrade => _comrade.name.toLowerCase() === comrade.toLowerCase()
+  //   );
 
-    if (!comradeData) {
-      return;
-    }
+  //   if (!comradeData) {
+  //     return;
+  //   }
 
-    // process data
-    let comradeMatchOutcomes = [];
-    let matches = comradeData.matches;
-    for (let i = 0; i < matches.length; i++) {
-      let match = matches[i];
-      console.log(match);
+  //   // process data
+  //   let comradeMatchOutcomes = [];
+  //   let matches = comradeData.matches;
+  //   for (let i = 0; i < matches.length; i++) {
+  //     let match = matches[i];
+  //     console.log(match);
 
-      //to-do
-      let characterUsed;
-      let kda;
+  //     //to-do
+  //     let characterUsed;
+  //     let kda;
 
-      function isWin(match) {
-        let participantIdentities = match.participantIdentities;
-        let comradeIdentity = participantIdentities.find(
-          participant =>
-            participant.player.summonerName.toLowerCase() ===
-            comrade.toLowerCase()
-        );
-        let comradeId = comradeIdentity.participantId;
+  //     function isWin(match) {
+  //       let participantIdentities = match.participantIdentities;
+  //       let comradeIdentity = participantIdentities.find(
+  //         participant =>
+  //           participant.player.summonerName.toLowerCase() ===
+  //           comrade.toLowerCase()
+  //       );
+  //       let comradeId = comradeIdentity.participantId;
 
-        // determine victory or loss
-        let winningNumbers = [];
-        let teamBlueOutcome = match.teams[0].win;
-        if (teamBlueOutcome === 'Win') {
-          winningNumbers = [0, 1, 2, 3, 4];
-        } else {
-          winningNumbers = [5, 6, 7, 8, 9];
-        }
+  //       // determine victory or loss
+  //       let winningNumbers = [];
+  //       let teamBlueOutcome = match.teams[0].win;
+  //       if (teamBlueOutcome === 'Win') {
+  //         winningNumbers = [0, 1, 2, 3, 4];
+  //       } else {
+  //         winningNumbers = [5, 6, 7, 8, 9];
+  //       }
 
-        if (winningNumbers.includes(comradeId)) {
-          return true;
-        } else {
-          return false;
-        }
-      }
+  //       if (winningNumbers.includes(comradeId)) {
+  //         return true;
+  //       } else {
+  //         return false;
+  //       }
+  //     }
 
-      // gameDuration
-      function gameDuration(match) {
-        let totalSeconds = match.gameDuration;
-        let gameMinutes = Math.floor(totalSeconds / 60);
-        let gameSeconds = totalSeconds - gameMinutes * 60;
+  //     // gameDuration
+  //     function gameDuration(match) {
+  //       let totalSeconds = match.gameDuration;
+  //       let gameMinutes = Math.floor(totalSeconds / 60);
+  //       let gameSeconds = totalSeconds - gameMinutes * 60;
 
-        gameDuration = `${gameMinutes}m ${gameSeconds}s`;
-        return gameDuration;
-      }
+  //       gameDuration = `${gameMinutes}m ${gameSeconds}s`;
+  //       return gameDuration;
+  //     }
 
-      // gameCreation
-      function gameCreation(match) {
-        let epochTime = match.gameCreation;
-        gameCreation = new Date(epochTime);
+  //     // gameCreation
+  //     function gameCreation(match) {
+  //       let epochTime = match.gameCreation;
+  //       gameCreation = new Date(epochTime);
 
-        return gameCreation;
-      }
+  //       return gameCreation;
+  //     }
 
-      // queueObject
-      function queueObject(match) {
-        let queueId = match.queueId;
-        queueObject = queues.find(queue => queue.queueId === queueId);
-        return queueObject;
-      }
+  //     // queueObject
+  //     function queueObject(match) {
+  //       let queueId = match.queueId;
+  //       queueObject = queues.find(queue => queue.queueId === queueId);
+  //       return queueObject;
+  //     }
 
-      comradeMatchOutcomes.push({
-        isWin: isWin(match),
-        // isRemake: isRemake,
-        gameCreation: gameCreation(match),
-        queueObject: queueObject(match),
-        gameDuration: gameDuration(match)
-      });
-    }
+  //     comradeMatchOutcomes.push({
+  //       isWin: isWin(match),
+  //       // isRemake: isRemake,
+  //       gameCreation: gameCreation(match),
+  //       queueObject: queueObject(match),
+  //       gameDuration: gameDuration(match)
+  //     });
+  //   }
 
-    console.log(comradeMatchOutcomes);
-    setMatchHistory(comradeMatchOutcomes);
+  //   // console.log(comradeMatchOutcomes);
+  //   setMatchHistory(comradeMatchOutcomes);
 
-    // let comradeMatches = comradeData.matches;
-    // let teamBlue = comradeMatches.teams[0];
-    // let teamRed = comradeMatches.teams[1];
+  //   // let comradeMatches = comradeData.matches;
+  //   // let teamBlue = comradeMatches.teams[0];
+  //   // let teamRed = comradeMatches.teams[1];
 
-    console.log(matches);
-    // console.log(specificMatches);
-    // console.log(specificMatches);
-    // console.log(comradeMatchOutcomes);
-  }
+  //   // console.log(matches);
+  //   // console.log(specificMatches);
+  //   // console.log(specificMatches);
+  //   // console.log(comradeMatchOutcomes);
+  // }
+
+  // console.log('rendering...', matchHistory);
 
   return (
-    <div className='mt-24'>
-      <MatchHistoryHero name={name} comrade={comrade}></MatchHistoryHero>
-      <MatchLayout matchHistory={matchHistory}>
-        <div className='flex flex-col'>
-          <MatchHistoryDetailsV2></MatchHistoryDetailsV2>
-          <div className='p-2 text-xl'>Anti213</div>
-          <div className='flex flex-col justify-center pl-3 text-xl text-gray-600'>
-            x
+    <div>
+      {matchHistory ? (
+        <div>
+          <div className='mt-24'>
+            <MatchHistoryHero name={name} comrade={comrade}></MatchHistoryHero>
+            {/* <MatchLayout matchHistory={matchHistory}>
+          <div className='flex flex-col'>
+            <MatchWrapper></MatchWrapper>
           </div>
-          <div className='p-2 text-xl'>KamikazeTomato</div>
-          <MatchHistoryDetails></MatchHistoryDetails>
+        </MatchLayout> */}
+            <SingleMatchDetailsMain
+              name={name}
+              comrade={comrade}
+              matchHistory={matchHistory}
+            ></SingleMatchDetailsMain>
+          </div>
+          <div>
+            <MatchLayout matchHistory={matchHistory}>
+              <div className='flex flex-col'>
+                <MatchWrapper></MatchWrapper>
+              </div>
+            </MatchLayout>
+          </div>
         </div>
-      </MatchLayout>
+      ) : null}
     </div>
   );
 };
@@ -137,11 +152,11 @@ export default MatchHistory;
 function MatchHistoryHero({ name, comrade }) {
   return (
     <div>
-      <div className='flex justify-center '>
-        <div className='p-4 bg-white border border-gray-600 rounded'>
+      <div className='flex justify-center'>
+        <div className='flex justify-center w-3/4 p-4 bg-white border border-gray-600 rounded'>
           <div className='text-3xl font-light leading-tight sm:text-4xl md:text-5xl xl:text-4xl'>
-            <div className='flex flex-col '>
-              <span className='flex justify-center font-normal text-gray-900'>
+            <div className='flex flex-col'>
+              <span className='flex flex-row items-center justify-center font-normal text-center text-gray-900'>
                 {name}
               </span>
               <span className='flex justify-center text-gray-600'>x</span>
@@ -156,16 +171,30 @@ function MatchHistoryHero({ name, comrade }) {
   );
 }
 
+function SingleMatchDetailsMain({ name, comrade, matchHistory }) {
+  console.log('here is where the data matters', name, comrade, matchHistory);
+  return (
+    <MatchLayout>
+      <div className='flex flex-col'>
+        <MatchWrapper
+          name={name}
+          comrade={comrade}
+          matchHistory={matchHistory}
+        ></MatchWrapper>
+      </div>
+    </MatchLayout>
+  );
+}
+
 function MatchLayout({ children }) {
   return (
     <div>
-      <div className='relative w-full pt-16 pb-40 mx-auto bg-gray-200 max-w-screen-xl md:pb-24'>
-        {/* <div className='flex justify-center text-2xl'>Match History</div> */}
+      <div className='relative w-full pb-10 mx-auto bg-gray-200 lg:px-8 max-w-screen-xl md:pb-12'>
         <div className='flex'>
-          <div className='flex flex-col justify-center px-2'>Jan 22</div>
-          <div className='flex-1 my-8 border-b-2 border-gray-500'></div>
+          <div className='flex flex-col justify-center px-2'>Jan 23</div>
+          <div className='flex-1 px-2 my-8 border-b-2 border-gray-500'></div>
         </div>
-        <div className='overflow-hidden bg-white border-t border-b border-gray-400'>
+        <div className='overflow-hidden bg-white border-t border-b border-gray-400 lg:border-gray-200 lg:rounded lg:shadow-md'>
           {children}
         </div>
       </div>
@@ -173,50 +202,80 @@ function MatchLayout({ children }) {
   );
 }
 
-function MatchHistoryDetailsV2() {
+function MatchWrapper({ name, comrade, matchHistory }) {
   return (
     <div>
       <div className='relative overflow-hidden'>
-        <MatchHistoryDetailsHeader></MatchHistoryDetailsHeader>
-
-        <MatchDetails></MatchDetails>
-        <MatchDetails></MatchDetails>
+        <MatchDetailsHeader matchHistory={matchHistory}></MatchDetailsHeader>
+        <MatchDetails name={name} matchHistory={matchHistory}></MatchDetails>
+        <MatchDetails name={comrade} matchHistory={matchHistory}></MatchDetails>
       </div>
     </div>
   );
 
-  function MatchHistoryDetailsHeader() {
+  function MatchDetailsHeader({ matchHistory }) {
+    if (!matchHistory) {
+      return null;
+    }
+
+    let queueType = matchHistory[0].queueObject.description;
+    let gameDuration = matchHistory[0].gameDuration;
+    let gameCreation = matchHistory[0].gameCreation;
+
+    let dateTime = getDateTime(gameCreation);
+    let dateLeft = gameCreation.toDateString().split(' ');
+    dateLeft.pop();
+    let trueDate = dateLeft.join(' ') + '  ' + dateTime;
+    let trueDate2 = trueDate.replace(/ /g, '\u00a0');
+
     return (
-      <div className='flex items-center justify-between py-3 border-b border-gray-200'>
-        <div className='flex flex-1 min-w-0 px-2 text-s'>Ranked Solo</div>
-        <div className='flex items-center flex-shrink-0 px-2 ml-6 text-s'>
-          28m 9s
+      <div className='flex items-center justify-between py-3 text-sm border-b border-gray-200'>
+        <div className='flex flex-1 min-w-0 px-2 lg:px-3'>
+          {/* Ranked Solo */}
+          {/* {gameType} */}
+          {queueType}
+        </div>
+        <div className='flex items-center flex-shrink-0 px-3 ml-6'>
+          {/* {trueDate2} */}
+          {gameDuration}
         </div>
       </div>
     );
+
+    function getDateTime(date) {
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      let ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      let strTime = hours + ':' + minutes + ' ' + ampm;
+      return strTime;
+    }
   }
 
-  function MatchDetails() {
+  function MatchDetails({ name, matchHistory }) {
     return (
       <div>
         <div className='flex'>
-          <div className='flex flex-col justify-center px-2 mt-2'>Anti213</div>
+          <div className='flex flex-col justify-center px-2 mt-2 lg:px-3'>
+            {name}
+          </div>
           <div className='flex-1 mt-6 mb-4 border-b-2 border-gray-500'></div>
-          <div className='flex flex-col justify-center px-2 mt-2 font-bold tracking-wide text-blue-500'>
+          <div className='flex flex-col justify-center px-2 mt-2 font-bold tracking-wide text-blue-500 lg:px-3'>
             VICTORY
           </div>
         </div>
-        <div className='flex justify-between p-2 border-b border-gray-200'>
-          {/* <div className='flex justify-center'> */}
+        <div className='flex justify-between px-2 pb-2 border-b border-gray-200 lg:px-3'>
           <div className='flex flex-col items-center justify-center mt-2 text-center big-picture'>
             <StyledAvatar>M</StyledAvatar>
-            <div className='pt-4 text-sm'>Aurelion Sol</div>
+            <div className='pt-3 text-sm'>Aurelion Sol</div>
           </div>
           <div className='flex justify-center'>
             <div className='flex flex-col items-center justify-between font-semibold text-center'>
               <div>3 / 4 / 3</div>
-              <div>160</div>
-              <div>11,121</div>
+              <div>160 CS</div>
+              <div className='pb-1'>17,727 G</div>
             </div>
           </div>
           <div className='flex justify-end '>
@@ -250,58 +309,6 @@ function MatchHistoryDetailsV2() {
   }
 }
 
-function MatchHistoryDetails() {
-  return (
-    <div>
-      <div className='flex'>
-        <div className='w-1/3 bg-red-400'>
-          <MatchHistorySection1></MatchHistorySection1>
-        </div>
-        <div className='w-1/3 bg-green-400'>sdf</div>
-        <div className='w-1/3 bg-teal-400'>Section 3</div>
-        {/* <div className='w-1/3 py-2 bg-orange-400'>Section 4</div> */}
-        {/* <div className='w-1/5 px-2 py-2 bg-indigo-400'>Section 5</div> */}
-      </div>
-    </div>
-  );
-}
-
-function MatchHistorySection1() {
-  return (
-    <div className='flex'>
-      <div className='flex flex-col items-center w-1/3 text-center'>
-        <StyledAvatar className='p-2'>M</StyledAvatar>
-        <div className='text-xs'>Mordekaiser</div>
-      </div>
-      <div className='w-2/3'>
-        <div className='tracking-wide text-s'>VICTORY</div>
-        <div className='text-xs'>Normal (Draft Pick)</div>
-        <div className='flex'>
-          <div>F</div>
-          <div>T</div>
-        </div>
-      </div>
-      {/* <div>
-        <div>Normal</div>
-        <div>---</div>
-        <div>Victory</div>
-      </div>
-      <div>
-        <div className='flex'>
-          <StyledAvatar className='flex flex-col justify-center'>
-            M
-          </StyledAvatar>
-          <div className='flex flex-col'>
-            <div className=''>sd</div>
-            <div className=''>sdf</div>
-          </div>
-        </div>
-        <div>Mordekaiser</div>
-      </div> */}
-    </div>
-  );
-}
-
 export const StyledAvatar = styled.div`
   background-color: #f3f3f3;
   height: 3rem;
@@ -324,3 +331,56 @@ export const StyledAvatarSquare = styled.div`
   // margin: 0.3rem;
   // ddonggumong: 5 inches, flat;
 `;
+
+// ARCHIVE
+// function MatchHistoryDetails() {
+//   return (
+//     <div>
+//       <div className='flex'>
+//         <div className='w-1/3 bg-red-400'>
+//           <MatchHistorySection1></MatchHistorySection1>
+//         </div>
+//         <div className='w-1/3 bg-green-400'>sdf</div>
+//         <div className='w-1/3 bg-teal-400'>Section 3</div>
+//         {/* <div className='w-1/3 py-2 bg-orange-400'>Section 4</div> */}
+//         {/* <div className='w-1/5 px-3 py-2 bg-indigo-400'>Section 5</div> */}
+//       </div>
+//     </div>
+//   );
+// }
+
+// function MatchHistorySection1() {
+//   return (
+//     <div className='flex'>
+//       <div className='flex flex-col items-center w-1/3 text-center'>
+//         <StyledAvatar className='p-2'>M</StyledAvatar>
+//         <div className='text-xs'>Mordekaiser</div>
+//       </div>
+//       <div className='w-2/3'>
+//         <div className='tracking-wide text-s'>VICTORY</div>
+//         <div className='text-xs'>Normal (Draft Pick)</div>
+//         <div className='flex'>
+//           <div>F</div>
+//           <div>T</div>
+//         </div>
+//       </div>
+//       {/* <div>
+//         <div>Normal</div>
+//         <div>---</div>
+//         <div>Victory</div>
+//       </div>
+//       <div>
+//         <div className='flex'>
+//           <StyledAvatar className='flex flex-col justify-center'>
+//             M
+//           </StyledAvatar>
+//           <div className='flex flex-col'>
+//             <div className=''>sd</div>
+//             <div className=''>sdf</div>
+//           </div>
+//         </div>
+//         <div>Mordekaiser</div>
+//       </div> */}
+//     </div>
+//   );
+// }

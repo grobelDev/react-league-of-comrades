@@ -17,9 +17,9 @@ import Header from './Header';
 import SummonerList from './SummonerList';
 import SummonerListFallback from './SummonerListFallback';
 import SummonerListV2 from './SummonerListV2';
-import MatchHistory from './MatchHistory';
 import ErrorBoundary from './ErrorBoundary';
 import Spinner from './Spinner';
+import MatchHistoryWrapper from './MatchHistoryWrapper';
 
 const Spinner2 = styled.div`
   border: 8px solid #f3f3f3; /* Light grey */
@@ -248,37 +248,37 @@ function App() {
 
 export default App;
 
-function MatchHistoryWrapper({ resource }) {
-  return (
-    <Suspense
-      fallback={
-        <FadeIn>
-          <Spinner></Spinner>
-        </FadeIn>
-      }
-    >
-      <MatchHistoryDetails resource={resource}></MatchHistoryDetails>
-    </Suspense>
-  );
-}
+// function MatchHistoryWrapper({ resource }) {
+//   return (
+//     <Suspense
+//       fallback={
+//         <FadeIn>
+//           <Spinner></Spinner>
+//         </FadeIn>
+//       }
+//     >
+//       <MatchHistoryDetails resource={resource}></MatchHistoryDetails>
+//     </Suspense>
+//   );
+// }
 
-function MatchHistoryDetails({ resource }) {
-  let { comrade } = useParams();
+// function MatchHistoryDetails({ resource }) {
+//   let { comrade } = useParams();
 
-  const name = resource.userName;
-  const data = resource.comrades.read();
-  let parsedData = parseData(name, data);
+//   const name = resource.userName;
+//   const data = resource.comrades.read();
+//   let parsedData = parseData(name, data);
 
-  return (
-    <FadeIn>
-      <MatchHistory
-        name={parsedData.formattedName}
-        comrade={comrade}
-        data={data}
-      ></MatchHistory>
-    </FadeIn>
-  );
-}
+//   return (
+//     <FadeIn>
+//       <MatchHistory
+//         name={parsedData.formattedName}
+//         comrade={comrade}
+//         data={data}
+//       ></MatchHistory>
+//     </FadeIn>
+//   );
+// }
 
 function SummonerListWrapper({ resource }) {
   return (
