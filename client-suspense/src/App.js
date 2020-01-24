@@ -195,7 +195,7 @@ function App() {
         <Route
           exact
           path='/:region/:name'
-          render={() => {
+          component={() => {
             return (
               <div>
                 <Header />
