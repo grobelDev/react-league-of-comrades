@@ -27,8 +27,6 @@ function MatchHistoryDetails({ resource }) {
   const data = resource.comrades.read();
   let formattedName = parseData(name, data).formattedName;
   let matchHistory = getMatchOutcomes(name, comrade, data);
-  // console.log(matchOutcomes);
-  // console.log(data);
 
   return (
     <FadeIn>
@@ -40,22 +38,6 @@ function MatchHistoryDetails({ resource }) {
     </FadeIn>
   );
 }
-
-// function MatchHistoryDetails2({ name, comrade, matchHistory }) {
-//   // let { comrade } = useParams();
-//   // const name = resource.userName;
-//   // const data = resource.comrades.read();
-//   // let formattedName = parseData(name, data).formattedName;
-//   // let matchHistory = getMatchOutcomes(name, comrade, data);
-
-//   return (
-//     <MatchHistory
-//       name={name}
-//       comrade={comrade}
-//       matchHistory={matchHistory}
-//     ></MatchHistory>
-//   );
-// }
 
 function getMatchOutcomes(name, comrade, data) {
   if (!data) {
@@ -78,8 +60,14 @@ function getMatchOutcomes(name, comrade, data) {
     // console.log(match);
 
     //to-do
-    let characterUsed;
-    let kda;
+    // let characterUsed;
+    // let kda;
+
+    function getUserMatch() {
+      console.log('MATCH DATA', match);
+    }
+
+    getUserMatch();
 
     function isWin(match) {
       let participantIdentities = match.participantIdentities;
@@ -140,19 +128,7 @@ function getMatchOutcomes(name, comrade, data) {
     });
   }
 
-  // console.log(comradeMatchOutcomes);
-  // setMatchHistory(comradeMatchOutcomes);
-  // console.log('final result', comradeMatchOutcomes);
   return comradeMatchOutcomes;
-
-  // let comradeMatches = comradeData.matches;
-  // let teamBlue = comradeMatches.teams[0];
-  // let teamRed = comradeMatches.teams[1];
-
-  // console.log(matches);
-  // console.log(specificMatches);
-  // console.log(specificMatches);
-  // console.log(comradeMatchOutcomes);
 }
 
 function parseData(name, data) {

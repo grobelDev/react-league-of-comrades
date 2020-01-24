@@ -40,8 +40,11 @@ const Header = () => {
     let paths = location.pathname.split('/');
     let _region = paths[1];
     // let _name = paths[2];
-
-    setRegion(validRegionsReverse[_region]);
+    if (typeof validRegionsReverse[_region] === 'undefined') {
+      setRegion('NA');
+    } else {
+      setRegion(validRegionsReverse[_region]);
+    }
     // setName(_name);
   }, [location]);
 
