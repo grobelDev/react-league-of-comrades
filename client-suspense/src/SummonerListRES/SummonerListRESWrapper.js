@@ -1,6 +1,8 @@
 import React, { useState, useEffect, Suspense, Fragment } from 'react';
+import FadeIn from 'react-fade-in';
 
 import SummonerListRES from '../SummonerListRES';
+import Spinner from '../Spinner';
 
 export default function SummonerListRESWrapper({ resource }) {
   console.log(resource);
@@ -8,7 +10,13 @@ export default function SummonerListRESWrapper({ resource }) {
   return (
     <div>
       <div>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense
+          fallback={
+            <FadeIn>
+              <Spinner></Spinner>
+            </FadeIn>
+          }
+        >
           <SummonerListRESDetails resource={resource}></SummonerListRESDetails>
         </Suspense>
       </div>
@@ -49,11 +57,13 @@ function SummonerListRESDetails({ resource }) {
     let cellData = filteredData.map((player, index) => {
       let message = `Played together ${player.count} times.`;
       let avatar = player.name[0];
+      let profileImage = player.profileImage;
       let id = index + 1;
       let playerObject = {
         title: player.name,
         message: message,
         avatar: avatar,
+        profileImage: profileImage,
         id: id
       };
       return playerObject;

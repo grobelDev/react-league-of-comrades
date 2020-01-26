@@ -18,22 +18,22 @@ function resultsToFile(data) {
   });
 }
 
-let sampleData = require('./data4.json');
+// let sampleData = require('./data4.json');
 let queues = require('./queues.json');
 let ddragon = require('./ddragon.js');
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
 
-async function dataFilter(data) {
-  // begin data fetching
-  // let currentPatch = await ddragon.getCurrentPatch();
-  // let getChampionJSON = await ddragon.getChampionJSON(currentPatch);
-  // // console.log(getChampionJSON);
-  // // console.log(data);
-  // console.log(data);
-  // let results = dataMain
-  // dataToFile(data);
-  // dataMain(sampleData);
-}
+// async function dataFilter(data) {
+//   // begin data fetching
+//   // let currentPatch = await ddragon.getCurrentPatch();
+//   // let getChampionJSON = await ddragon.getChampionJSON(currentPatch);
+//   // // console.log(getChampionJSON);
+//   // // console.log(data);
+//   // console.log(data);
+//   // let results = dataMain
+//   // dataToFile(data);
+//   // dataMain(sampleData);
+// }
 
 // console.log(JSON.stringify(dataMain(sampleData)));
 
@@ -296,6 +296,6 @@ function getPlayerDataFromMatch(name, match, championJSON, currentPatch) {
 // };
 
 module.exports = {
-  dataFilter: dataFilter,
+  // dataFilter: dataFilter,
   dataMain: dataMain
 };

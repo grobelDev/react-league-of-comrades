@@ -17,6 +17,7 @@ app.get('/', async (req, res) => {
   let region = req.query.region;
   // console.log(name, region);
   // console.log(typeof result);
+  // console.log(decodeURIComponent(summonerName));
 
   try {
     // let result = await functions.mainV2(name, region);
@@ -25,10 +26,12 @@ app.get('/', async (req, res) => {
     // console.log('hi');
     let rawResult = await functions.mainV3(name, region);
     // let parsedData = await functions2.dataFilter(testResult);
+    // let completeResult = rawResult;
     let completeResult = await functions2.dataMain(rawResult);
 
     res.status(200).send(completeResult);
   } catch (err) {
+    console.log(err);
     res.status(400).send(err);
   }
 });

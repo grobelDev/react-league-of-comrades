@@ -40,12 +40,18 @@ async function mainV3(summonerName, region) {
 
     let summonerArray = organizePlayerObject(currentPatch, matchIdArray);
 
+    let decodedName = decodeURIComponent(summonerName);
+
     let trueSummonerName = summonerArray.find(
-      summoner => summoner.name.toLowerCase() === summonerName.toLowerCase()
+      summoner => summoner.name.toLowerCase() === decodedName.toLowerCase()
     ).name;
     let filteredSummonerArray = summonerArray.filter(
       summoner => summoner.name !== trueSummonerName
     );
+
+    // let formattedName = data.find(
+    //   player => player.name.toLowerCase() === name.toLowerCase()
+    // ).name;
 
     let profileImage = getProfileImageURLFromId(currentPatch, profileIcon);
 

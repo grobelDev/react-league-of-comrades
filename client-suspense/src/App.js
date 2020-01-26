@@ -43,29 +43,29 @@ function App() {
       const params = UserMatch.params;
       const userName = params.name;
       const userRegion = params.region;
-
-      if (resourceStore[userName]) {
-        startTransition(() => {
-          let cachedResource = resourceStore[userName].resource;
-          setResource(cachedResource);
-        });
-      } else {
-        setTransitionResource(resource);
-        const newResource = fetchUserDataV2(userName, userRegion);
-        startTransition(() => {
-          setResourceStore(resourceStore => {
-            let newResourceStore = { ...resourceStore };
-            newResourceStore[userName] = {
-              userName: userName,
-              resource: newResource
-            };
-            return newResourceStore;
-          });
-        });
-        startTransition(() => {
-          setResource(newResource);
-        });
-      }
+      console.log(userName);
+      // if (resourceStore[userName]) {
+      //   startTransition(() => {
+      //     let cachedResource = resourceStore[userName].resource;
+      //     setResource(cachedResource);
+      //   });
+      // } else {
+      // setTransitionResource(resource);
+      const newResource = fetchUserDataV2(userName, userRegion);
+      // startTransition(() => {
+      //   setResourceStore(resourceStore => {
+      //     let newResourceStore = { ...resourceStore };
+      //     newResourceStore[userName] = {
+      //       userName: userName,
+      //       resource: newResource
+      //     };
+      //     return newResourceStore;
+      //   });
+      // });
+      startTransition(() => {
+        setResource(newResource);
+      });
+      // }
     }
   }, [location]);
 
