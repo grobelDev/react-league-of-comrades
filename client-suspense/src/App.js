@@ -1,5 +1,5 @@
 import React, { useState, useTransition, Suspense, useEffect } from 'react';
-import { fetchUserData } from './locApi';
+import { fetchUserDataV2 } from './locApi';
 import styled from 'styled-components';
 import {
   BrowserRouter as Router,
@@ -19,8 +19,10 @@ import ErrorBoundary from './ErrorBoundary';
 import Spinner from './Spinner';
 import MatchHistoryWrapper from './MatchHistoryWrapper';
 import SplashPage from './SplashPage';
+// import SummonerListRES from './SummonerListRES';
+import SummonerListRESWrapper from './SummonerListRES/SummonerListRESWrapper';
 
-const initialResource = fetchUserData('doublelift', 'na1');
+const initialResource = fetchUserDataV2('doublelift', 'na1');
 
 function App() {
   // state
@@ -49,7 +51,7 @@ function App() {
         });
       } else {
         setTransitionResource(resource);
-        const newResource = fetchUserData(userName, userRegion);
+        const newResource = fetchUserDataV2(userName, userRegion);
         startTransition(() => {
           setResourceStore(resourceStore => {
             let newResourceStore = { ...resourceStore };
@@ -103,10 +105,14 @@ function App() {
                     resource={resource}
                   ></SummonerListWrapper> */}
                   {/* <SummonerListFetchThenRender></SummonerListFetchThenRender> */}
-                  <SummonerListWrapper
+                  {/* <SummonerListWrapper
                     resource={resource}
                     isPending={isPending}
-                  ></SummonerListWrapper>
+                  ></SummonerListWrapper> */}
+                  {/* <SummonerListRES resource={resource}></SummonerListRES> */}
+                  <SummonerListRESWrapper
+                    resource={resource}
+                  ></SummonerListRESWrapper>
                 </div>
               </div>
             );
@@ -120,9 +126,9 @@ function App() {
                 <Header />
                 <div className='mt-16'>
                   {/* <div>ComradePage</div> */}
-                  <MatchHistoryWrapper
+                  {/* <MatchHistoryWrapper
                     resource={resource}
-                  ></MatchHistoryWrapper>
+                  ></MatchHistoryWrapper> */}
                   {/* <div>{JSON.stringify(resource.comrades.read())}</div> */}
                 </div>
               </div>
@@ -141,18 +147,6 @@ function App() {
 }
 
 export default App;
-
-function SummonerListFetchThenRender() {
-  let { name, region } = useParams();
-
-  return (
-    <div>
-      <div>
-        {name} - {region}
-      </div>
-    </div>
-  );
-}
 
 function SummonerListWrapper({ resource }) {
   return (
@@ -406,7 +400,7 @@ function SummonerListDetails({ resource }) {
 //     const params = UserMatch.params;
 //     const userName = params.name;
 //     const userRegion = params.region;
-//     const resource = fetchUserData(userName, userRegion);
+//     const resource = fetchUserDataV2(userName, userRegion);
 //     startTransition(() => {
 //       setResource(resource);
 //     });
@@ -420,7 +414,7 @@ function SummonerListDetails({ resource }) {
 //   console.log(currentIndex);
 //   const nextIndex = getNextIndex(currentIndex);
 //   setResource(
-//     fetchUserData(testData[nextIndex].name, testData[nextIndex].region)
+//     fetchUserDataV2(testData[nextIndex].name, testData[nextIndex].region)
 //   );
 // }
 
@@ -429,7 +423,7 @@ function SummonerListDetails({ resource }) {
 //   // console.log(name, region);
 //   const userName = name;
 //   const userRegion = region;
-//   const divResource = fetchUserData(userName, userRegion);
+//   const divResource = fetchUserDataV2(userName, userRegion);
 //   // startTransition(() => {
 //   //   setResource(divResource);
 //   // });
@@ -467,7 +461,7 @@ function SummonerListDetails({ resource }) {
 //   const params = UserMatch.params;
 //   const userName = params.name;
 //   const userRegion = params.region;
-//   const resource = fetchUserData(userName, userRegion);
+//   const resource = fetchUserDataV2(userName, userRegion);
 //   return resource;
 // }
 
@@ -476,7 +470,7 @@ function SummonerListDetails({ resource }) {
 //   const params = UserMatch.params;
 //   const userName = params.name;
 //   const userRegion = params.region;
-//   const resource = fetchUserData(userName, userRegion);
+//   const resource = fetchUserDataV2(userName, userRegion);
 //   console.log('asdflajfdslk');
 //   return resource;
 // }
