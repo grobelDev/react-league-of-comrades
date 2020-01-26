@@ -4,9 +4,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './tailwind.css';
 
 import App from './App';
+import AppWrapper from './AppWrapper';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Router>
-    <App />
+    <AppWrapper />
   </Router>
 );

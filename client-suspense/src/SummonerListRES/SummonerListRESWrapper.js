@@ -5,7 +5,7 @@ import SummonerListRES from '../SummonerListRES';
 import Spinner from '../Spinner';
 
 export default function SummonerListRESWrapper({ resource }) {
-  console.log(resource);
+  // console.log(resource);
 
   return (
     <div>

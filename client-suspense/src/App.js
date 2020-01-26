@@ -22,11 +22,11 @@ import SplashPage from './SplashPage';
 // import SummonerListRES from './SummonerListRES';
 import SummonerListRESWrapper from './SummonerListRES/SummonerListRESWrapper';
 
-const initialResource = fetchUserDataV2('doublelift', 'na1');
+// const initialResource = fetchUserDataV2('doublelift', 'na1');
 
-function App() {
+function App(props) {
   // state
-  const [resource, setResource] = useState(initialResource);
+  const [resource, setResource] = useState(props.resource);
   const [resourceStore, setResourceStore] = useState({});
   const [transitionResource, setTransitionResource] = useState(null);
   const [startTransition, isPending] = useTransition({
@@ -34,40 +34,45 @@ function App() {
     timeoutMs: 500
   });
 
-  // hooks
-  let UserMatch = useRouteMatch('/:region/:name');
-  let location = useLocation();
+  // console.log('app:', props.resource);
 
   useEffect(() => {
-    if (UserMatch) {
-      const params = UserMatch.params;
-      const userName = params.name;
-      const userRegion = params.region;
-      console.log(userName);
-      // if (resourceStore[userName]) {
-      //   startTransition(() => {
-      //     let cachedResource = resourceStore[userName].resource;
-      //     setResource(cachedResource);
-      //   });
-      // } else {
-      // setTransitionResource(resource);
-      const newResource = fetchUserDataV2(userName, userRegion);
-      // startTransition(() => {
-      //   setResourceStore(resourceStore => {
-      //     let newResourceStore = { ...resourceStore };
-      //     newResourceStore[userName] = {
-      //       userName: userName,
-      //       resource: newResource
-      //     };
-      //     return newResourceStore;
-      //   });
-      // });
-      startTransition(() => {
-        setResource(newResource);
-      });
-      // }
-    }
-  }, [location]);
+    setResource(props.resource);
+  }, [props]);
+  // hooks
+  // let UserMatch = useRouteMatch('/:region/:name');
+  // let location = useLocation();
+
+  // useEffect(() => {
+  //   if (UserMatch) {
+  //     const params = UserMatch.params;
+  //     const userName = params.name;
+  //     const userRegion = params.region;
+  //     console.log(userName);
+  //     // if (resourceStore[userName]) {
+  //     //   startTransition(() => {
+  //     //     let cachedResource = resourceStore[userName].resource;
+  //     //     setResource(cachedResource);
+  //     //   });
+  //     // } else {
+  //     // setTransitionResource(resource);
+  //     const newResource = fetchUserDataV2(userName, userRegion);
+  //     // startTransition(() => {
+  //     //   setResourceStore(resourceStore => {
+  //     //     let newResourceStore = { ...resourceStore };
+  //     //     newResourceStore[userName] = {
+  //     //       userName: userName,
+  //     //       resource: newResource
+  //     //     };
+  //     //     return newResourceStore;
+  //     //   });
+  //     // });
+  //     startTransition(() => {
+  //       setResource(newResource);
+  //     });
+  //     // }
+  //   }
+  // }, [location]);
 
   return (
     <div>
