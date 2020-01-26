@@ -29,7 +29,7 @@ function App() {
   const [transitionResource, setTransitionResource] = useState(null);
   const [startTransition, isPending] = useTransition({
     // Wait 10 seconds before fallback
-    timeoutMs: 10000
+    timeoutMs: 500
   });
 
   // hooks
@@ -102,6 +102,7 @@ function App() {
                   {/* <SummonerListWrapper
                     resource={resource}
                   ></SummonerListWrapper> */}
+                  {/* <SummonerListFetchThenRender></SummonerListFetchThenRender> */}
                   <SummonerListWrapper
                     resource={resource}
                     isPending={isPending}
@@ -113,7 +114,7 @@ function App() {
         />
         <Route
           path='/:region/:name/:comrade'
-          render={() => {
+          component={() => {
             return (
               <div>
                 <Header />
@@ -140,6 +141,18 @@ function App() {
 }
 
 export default App;
+
+function SummonerListFetchThenRender() {
+  let { name, region } = useParams();
+
+  return (
+    <div>
+      <div>
+        {name} - {region}
+      </div>
+    </div>
+  );
+}
 
 function SummonerListWrapper({ resource }) {
   return (
@@ -198,11 +211,13 @@ function SummonerListDetails({ resource }) {
   let parsedData = parseData(name, data);
 
   return (
-    <SummonerList
-      name={parsedData.formattedName}
-      emails={parsedData.emails}
-      emailIds={parsedData.emailIds}
-    ></SummonerList>
+    <Suspense fallback={<div>Testing</div>}>
+      <SummonerList
+        name={parsedData.formattedName}
+        emails={parsedData.emails}
+        emailIds={parsedData.emailIds}
+      ></SummonerList>
+    </Suspense>
   );
 }
 

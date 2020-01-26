@@ -35,7 +35,6 @@ const MatchHistory = props => {
     let matches = comradeData.matches;
     for (let i = 0; i < matches.length; i++) {
       let match = matches[i];
-      console.log(match);
 
       //to-do
       let characterUsed;

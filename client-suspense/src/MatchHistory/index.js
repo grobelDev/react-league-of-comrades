@@ -15,108 +15,6 @@ const MatchHistory = props => {
     // setData(props.data);
   }, [props]);
 
-  // useEffect(() => {
-  //   getMatchOutcomes();
-  // }, [data]);
-
-  // function getMatchOutcomes() {
-  //   if (!data) {
-  //     return;
-  //   }
-
-  //   let comradeData = data.find(
-  //     _comrade => _comrade.name.toLowerCase() === comrade.toLowerCase()
-  //   );
-
-  //   if (!comradeData) {
-  //     return;
-  //   }
-
-  //   // process data
-  //   let comradeMatchOutcomes = [];
-  //   let matches = comradeData.matches;
-  //   for (let i = 0; i < matches.length; i++) {
-  //     let match = matches[i];
-  //     console.log(match);
-
-  //     //to-do
-  //     let characterUsed;
-  //     let kda;
-
-  //     function isWin(match) {
-  //       let participantIdentities = match.participantIdentities;
-  //       let comradeIdentity = participantIdentities.find(
-  //         participant =>
-  //           participant.player.summonerName.toLowerCase() ===
-  //           comrade.toLowerCase()
-  //       );
-  //       let comradeId = comradeIdentity.participantId;
-
-  //       // determine victory or loss
-  //       let winningNumbers = [];
-  //       let teamBlueOutcome = match.teams[0].win;
-  //       if (teamBlueOutcome === 'Win') {
-  //         winningNumbers = [0, 1, 2, 3, 4];
-  //       } else {
-  //         winningNumbers = [5, 6, 7, 8, 9];
-  //       }
-
-  //       if (winningNumbers.includes(comradeId)) {
-  //         return true;
-  //       } else {
-  //         return false;
-  //       }
-  //     }
-
-  //     // gameDuration
-  //     function gameDuration(match) {
-  //       let totalSeconds = match.gameDuration;
-  //       let gameMinutes = Math.floor(totalSeconds / 60);
-  //       let gameSeconds = totalSeconds - gameMinutes * 60;
-
-  //       gameDuration = `${gameMinutes}m ${gameSeconds}s`;
-  //       return gameDuration;
-  //     }
-
-  //     // gameCreation
-  //     function gameCreation(match) {
-  //       let epochTime = match.gameCreation;
-  //       gameCreation = new Date(epochTime);
-
-  //       return gameCreation;
-  //     }
-
-  //     // queueObject
-  //     function queueObject(match) {
-  //       let queueId = match.queueId;
-  //       queueObject = queues.find(queue => queue.queueId === queueId);
-  //       return queueObject;
-  //     }
-
-  //     comradeMatchOutcomes.push({
-  //       isWin: isWin(match),
-  //       // isRemake: isRemake,
-  //       gameCreation: gameCreation(match),
-  //       queueObject: queueObject(match),
-  //       gameDuration: gameDuration(match)
-  //     });
-  //   }
-
-  //   // console.log(comradeMatchOutcomes);
-  //   setMatchHistory(comradeMatchOutcomes);
-
-  //   // let comradeMatches = comradeData.matches;
-  //   // let teamBlue = comradeMatches.teams[0];
-  //   // let teamRed = comradeMatches.teams[1];
-
-  //   // console.log(matches);
-  //   // console.log(specificMatches);
-  //   // console.log(specificMatches);
-  //   // console.log(comradeMatchOutcomes);
-  // }
-
-  // console.log('rendering...', matchHistory);
-
   return (
     <div>
       {matchHistory ? (
@@ -241,17 +139,37 @@ function MatchWrapper({ name, comrade, match }) {
     let queueType = match.queueObject.description;
     let gameDuration = match.gameDuration;
 
+    let gameCreation = match.gameCreation;
+    let dateTime = getDateTime(gameCreation);
+    let dateLeft = gameCreation.toDateString().split(' ');
+    dateLeft.pop();
+
+    let monthDayDate = dateLeft.join(' ');
+
     // let betterQueueType = queueType.replace(/\s(games+)$\s+/, '');
     // console.log(better)
 
     return (
       <div className='flex items-center justify-between py-3 text-sm border-b border-gray-200'>
-        <div className='flex flex-1 min-w-0 px-2 lg:px-3'>{queueType}</div>
+        <div className='flex flex-1 min-w-0 px-2 lg:px-3'>
+          {queueType} • {gameDuration}
+        </div>
         <div className='flex items-center flex-shrink-0 px-3 ml-6'>
-          {gameDuration}
+          {dateTime}
         </div>
       </div>
     );
+
+    function getDateTime(date) {
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      let ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      let strTime = hours + ':' + minutes + ' ' + ampm;
+      return strTime;
+    }
   }
 
   function MatchDetails({ name, match }) {
