@@ -1,22 +1,22 @@
-const fs = require('fs');
+// const fs = require('fs');
 
-function dataToFile(data) {
-  let results = JSON.stringify(data);
+// function dataToFile(data) {
+//   let results = JSON.stringify(data);
 
-  fs.writeFile('data5.json', results, err => {
-    // In case of a error throw err.
-    if (err) throw err;
-  });
-}
+//   fs.writeFile('data5.json', results, err => {
+//     // In case of a error throw err.
+//     if (err) throw err;
+//   });
+// }
 
-function resultsToFile(data) {
-  let results = JSON.stringify(data);
+// function resultsToFile(data) {
+//   let results = JSON.stringify(data);
 
-  fs.writeFile('results.json', results, err => {
-    // In case of a error throw err.
-    if (err) throw err;
-  });
-}
+//   fs.writeFile('results.json', results, err => {
+//     // In case of a error throw err.
+//     if (err) throw err;
+//   });
+// }
 
 // let sampleData = require('./data4.json');
 let queues = require('./queues.json');

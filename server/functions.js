@@ -25,7 +25,7 @@ let apiCalls = 0;
 
 async function mainV3(summonerName, region) {
   try {
-    let gameCount = 1;
+    let gameCount = 2;
 
     let playerData = await getAccountIdByNameV3(summonerName, region);
     let accountId = playerData.accountId;
