@@ -1,25 +1,56 @@
 import React, { useState, useEffect, Suspense, Fragment } from 'react';
-import { BrowserRouter as Router, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, useParams, Link } from 'react-router-dom';
 
 import FadeIn from 'react-fade-in';
 import MatchHistoryRES from '../MatchHistoryRES';
 import Spinner from '../Spinner';
+import ErrorBoundary from '../ErrorBoundary';
 
 export default function MatchHistoryRESWrapper({ resource }) {
   return (
     <div>
-      <Suspense
+      <ErrorBoundary
         fallback={
-          <FadeIn>
-            <Spinner></Spinner>
-          </FadeIn>
+          <div className='p-6'>
+            This pairing has no data! <br />
+            This might be because the pairing hasn't played any games together
+            recently. <br />
+            I'm currently working on storing match data for a more persistent
+            record.
+            <br />
+            <br />
+            Otherwise, a Summoner doesn't exist, it's the wrong region, or they
+            changed their name recently. <br />
+            <br />
+            {
+              <Link className='text-blue-500' to={`./`}>
+                Click here
+              </Link>
+            }{' '}
+            to go back to the Player's page.
+            <br />
+            <br /> Thanks for using the website!
+          </div>
         }
       >
-        <MatchHistoryRESDetails resource={resource}></MatchHistoryRESDetails>
-      </Suspense>
+        <Suspense
+          fallback={
+            <FadeIn>
+              <Spinner></Spinner>
+            </FadeIn>
+          }
+        >
+          <MatchHistoryRESDetails resource={resource}></MatchHistoryRESDetails>
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 }
+//         <div>
+//           Could not find Summoner. <br />
+//           Either this Summoner doesn't exist, it's the wrong region, or they
+//           changed their name recently.
+//         </div>
 
 function MatchHistoryRESDetails({ resource }) {
   // setup
@@ -27,6 +58,10 @@ function MatchHistoryRESDetails({ resource }) {
   let data = resource.results.read();
   let playerData = data.playerData;
   let comradeData = getComradeData(comrade, playerData);
+
+  if (!comradeData) {
+    return;
+  }
 
   // desired values
   let name = data.userName;
@@ -37,13 +72,15 @@ function MatchHistoryRESDetails({ resource }) {
   // console.log(comrade);
   return (
     <div>
-      <MatchHistoryRES
-        name={name}
-        comrade={comrade}
-        profileImage={profileImage}
-        count={count}
-        matches={matches}
-      ></MatchHistoryRES>
+      <FadeIn>
+        <MatchHistoryRES
+          name={name}
+          comrade={comrade}
+          profileImage={profileImage}
+          count={count}
+          matches={matches}
+        ></MatchHistoryRES>
+      </FadeIn>
     </div>
   );
 }

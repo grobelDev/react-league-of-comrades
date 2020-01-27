@@ -3,13 +3,29 @@ import FadeIn from 'react-fade-in';
 
 import SummonerListRES from '../SummonerListRES';
 import Spinner from '../Spinner';
+import ErrorBoundary from '../ErrorBoundary';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 
 export default function SummonerListRESWrapper({ resource }) {
-  // console.log(resource);
-
   return (
     <div>
-      <div>
+      <ErrorBoundary
+        fallback={
+          <div className='p-6'>
+            Could not find summoner! <br />
+            <br />
+            Either this Summoner doesn't exist, it's the wrong region, or they
+            changed their name recently. <br />
+            <br />
+            {
+              <Link className='text-blue-500' to={`../`}>
+                Click here
+              </Link>
+            }{' '}
+            to go back to the homepage. <br /> Thanks for using the website!
+          </div>
+        }
+      >
         <Suspense
           fallback={
             <FadeIn>
@@ -19,7 +35,7 @@ export default function SummonerListRESWrapper({ resource }) {
         >
           <SummonerListRESDetails resource={resource}></SummonerListRESDetails>
         </Suspense>
-      </div>
+      </ErrorBoundary>
     </div>
   );
 }
@@ -43,11 +59,6 @@ function SummonerListRESDetails({ resource }) {
         cellIds={cellIds}
         cells={cells}
       ></SummonerListRES>
-      {/* Testing Image Lazy Loading
-      <Suspense fallback={<div>Image Loading...</div>}>
-        <TestImageLoading resource={resource}></TestImageLoading>
-      </Suspense>
-      <div>{JSON.stringify(data, null, 2)}</div> */}
     </Fragment>
   );
 
