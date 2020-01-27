@@ -21,6 +21,7 @@ import MatchHistoryWrapper from './MatchHistoryWrapper';
 import SplashPage from './SplashPage';
 // import SummonerListRES from './SummonerListRES';
 import SummonerListRESWrapper from './SummonerListRES/SummonerListRESWrapper';
+import MatchHistoryRESWrapper from './MatchHistoryRES/MatchHistoryRESWrapper';
 
 // const initialResource = fetchUserDataV2('doublelift', 'na1');
 
@@ -99,21 +100,6 @@ function App(props) {
               <div>
                 <Header />
                 <div className='mt-16'>
-                  {/* <div>UserPage</div> */}
-                  {/* <FadeIn>
-                    <p>{JSON.stringify(location)}</p>
-                  </FadeIn> */}
-                  {/* <Button onClick={handleStateClick}>Update</Button> */}
-                  {/* <SummonerListWithParamsVX></SummonerListWithParamsVX> */}
-                  {/* <SummonerListWrapper
-                    resource={resource}
-                  ></SummonerListWrapper> */}
-                  {/* <SummonerListFetchThenRender></SummonerListFetchThenRender> */}
-                  {/* <SummonerListWrapper
-                    resource={resource}
-                    isPending={isPending}
-                  ></SummonerListWrapper> */}
-                  {/* <SummonerListRES resource={resource}></SummonerListRES> */}
                   <SummonerListRESWrapper
                     resource={resource}
                   ></SummonerListRESWrapper>
@@ -129,6 +115,9 @@ function App(props) {
               <div>
                 <Header />
                 <div className='mt-16'>
+                  <MatchHistoryRESWrapper
+                    resource={resource}
+                  ></MatchHistoryRESWrapper>
                   {/* <div>ComradePage</div> */}
                   {/* <MatchHistoryWrapper
                     resource={resource}
@@ -152,72 +141,72 @@ function App(props) {
 
 export default App;
 
-function SummonerListWrapper({ resource }) {
-  return (
-    <ErrorBoundary
-      fallback={
-        <div>
-          Could not find Summoner. <br />
-          Either this Summoner doesn't exist, it's the wrong region, or they
-          changed their name recently.
-        </div>
-      }
-    >
-      <Suspense
-        fallback={
-          <FadeIn>
-            <Spinner></Spinner>
-          </FadeIn>
-        }
-      >
-        <SummonerListDetails resource={resource}></SummonerListDetails>
-      </Suspense>
-    </ErrorBoundary>
-  );
-}
+// function SummonerListWrapper({ resource }) {
+//   return (
+//     <ErrorBoundary
+//       fallback={
+//         <div>
+//           Could not find Summoner. <br />
+//           Either this Summoner doesn't exist, it's the wrong region, or they
+//           changed their name recently.
+//         </div>
+//       }
+//     >
+//       <Suspense
+//         fallback={
+//           <FadeIn>
+//             <Spinner></Spinner>
+//           </FadeIn>
+//         }
+//       >
+//         <SummonerListDetails resource={resource}></SummonerListDetails>
+//       </Suspense>
+//     </ErrorBoundary>
+//   );
+// }
 
-function parseData(name, data) {
-  let formattedName = data.find(
-    player => player.name.toLowerCase() === name.toLowerCase()
-  ).name;
+// function parseData(name, data) {
+//   let formattedName = data.find(
+//     player => player.name.toLowerCase() === name.toLowerCase()
+//   ).name;
 
-  let filteredData = data.filter(player => player.name !== formattedName);
+//   let filteredData = data.filter(player => player.name !== formattedName);
 
-  let newData = filteredData.map((player, index) => {
-    let message = `Played together ${player.count} times.`;
-    let avatar = player.name[0];
-    let id = index + 1;
-    let playerObject = {
-      title: player.name,
-      message: message,
-      avatar: avatar,
-      id: id
-    };
-    return playerObject;
-  });
+//   let newData = filteredData.map((player, index) => {
+//     let message = `Played together ${player.count} times.`;
+//     let avatar = player.name[0];
+//     let id = index + 1;
+//     let playerObject = {
+//       title: player.name,
+//       message: message,
+//       avatar: avatar,
+//       id: id
+//     };
+//     return playerObject;
+//   });
 
-  let emailIds = [...new Array(newData.length).keys()];
-  let emails = newData;
+//   let emailIds = [...new Array(newData.length).keys()];
+//   let emails = newData;
 
-  // update name formatting
-  return { formattedName, emails, emailIds };
-}
+//   // update name formatting
+//   return { formattedName, emails, emailIds };
+// }
 
-function SummonerListDetails({ resource }) {
-  const name = resource.userName;
-  const data = resource.comrades.read();
-  let parsedData = parseData(name, data);
+// function SummonerListDetails({ resource }) {
+//   const name = resource.userName;
+//   const data = resource.comrades.read();
+//   let parsedData = parseData(name, data);
 
-  return (
-    <Suspense fallback={<div>Testing</div>}>
-      <SummonerList
-        name={parsedData.formattedName}
-        emails={parsedData.emails}
-        emailIds={parsedData.emailIds}
-      ></SummonerList>
-    </Suspense>
-  );
-}
+//   return (
+//     <Suspense fallback={<div>Testing</div>}>
+//       <SummonerList
+//         name={parsedData.formattedName}
+//         emails={parsedData.emails}
+//         emailIds={parsedData.emailIds}
+//       ></SummonerList>
+//     </Suspense>
+//   );
+// }
 
 // function SummonerListWrapperV2({ resource }) {
 //   return (
