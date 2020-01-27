@@ -99,11 +99,11 @@ const ListItem = ({
             ></img>
           </StyledAvatar>
           <div>
-            <Link to={`./${title}`}>
+            <Link to={`./${name}/${title}`}>
               <h3>{title}</h3>
             </Link>
             <div>{message}</div>
-            <Link to={`./${name}/${title}`}>Additional Information</Link>
+            <Link to={`./${title}`}>Visit Profile</Link>
           </div>
         </StyledEmail>
       </StyledListItem>
