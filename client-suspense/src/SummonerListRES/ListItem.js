@@ -92,18 +92,20 @@ const ListItem = ({
         <StyledEmail>
           {/* <StyledAvatar>{avatar}</StyledAvatar> */}
           <StyledAvatar>
-            <img
-              src={profileImage}
-              className='rounded-full'
-              alt='profile image'
-            ></img>
+            <Link to={`./${title}`}>
+              <img
+                src={profileImage}
+                className='rounded-full'
+                alt='profile image'
+              ></img>
+            </Link>
           </StyledAvatar>
           <div>
             <Link to={`./${name}/${title}`}>
               <h3>{title}</h3>
             </Link>
             <div>{message}</div>
-            <Link to={`./${title}`}>Visit Profile</Link>
+            {/* <Link to={`./${title}`}>{title} Profile</Link> */}
           </div>
         </StyledEmail>
       </StyledListItem>
