@@ -8,7 +8,7 @@ const functions2 = require('./functions2.js');
 const app = express();
 
 var corsOptions = {
-  origin: 'http://leagueofcomrades.com',
+  origin: 'https://leagueofcomrades.com',
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
