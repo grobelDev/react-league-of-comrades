@@ -4,13 +4,14 @@ import { BrowserRouter as Router, Link } from 'react-router-dom';
 export default function SplashPage() {
   return (
     <div className='mt-16'>
-      <div className='p-6'>
-        <div>STATUS: BETA</div>
+      <div className='p-6 bg-white'>
+        <div className='font-medium'>STATUS: BETA</div>
         <div>Welcome to League of Comrades.</div>
         <div>
-          Use the Search Bar to look up who a Summoner plays the best with.
+          Use the Search Bar to look up how a Summoner plays with their
+          Comrades.
         </div>
-        <div>Also, find detailed statistics from the most recent games.</div>
+        <div>Also, find detailed statistics from their most recent games.</div>
         <div className='mt-4'>
           <div>Here are some examples to get you started:</div>
           <div>
