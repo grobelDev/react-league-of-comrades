@@ -84,11 +84,11 @@ function SummonerListRESDetails({ resource }) {
   }
 }
 
-function TestImageLoading({ resource }) {
-  let data = resource.results.read();
-  let testImageSrc = data.profileImage;
-  return <img src={testImageSrc}></img>;
-}
+// function TestImageLoading({ resource }) {
+//   let data = resource.results.read();
+//   let testImageSrc = data.profileImage;
+//   return <img src={testImageSrc}></img>;
+// }
 
 // function parseData(name, data) {
 //   let formattedName = data.find(

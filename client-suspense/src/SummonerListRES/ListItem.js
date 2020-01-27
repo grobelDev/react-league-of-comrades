@@ -92,7 +92,11 @@ const ListItem = ({
         <StyledEmail>
           {/* <StyledAvatar>{avatar}</StyledAvatar> */}
           <StyledAvatar>
-            <img src={profileImage} className='rounded-full'></img>
+            <img
+              src={profileImage}
+              className='rounded-full'
+              alt='profile image'
+            ></img>
           </StyledAvatar>
           <div>
             <Link to={`./${title}`}>
