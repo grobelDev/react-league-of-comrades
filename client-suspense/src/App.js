@@ -85,7 +85,6 @@ function App(props) {
               <div>
                 <Header />
                 <div className='mt-16'>
-                  {/* <SummonerList></SummonerList> */}
                   <SplashPage></SplashPage>
                 </div>
               </div>

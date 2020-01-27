@@ -35,7 +35,8 @@ const ListItem = ({
   deleteItem,
   id,
   isBeingDeleted,
-  name
+  name,
+  profileImage
 }) => {
   const itemRef = useRef(null);
   const stops = useRef(null);
@@ -89,7 +90,10 @@ const ListItem = ({
       // }}
       >
         <StyledEmail>
-          <StyledAvatar>{avatar}</StyledAvatar>
+          {/* <StyledAvatar>{avatar}</StyledAvatar> */}
+          <StyledAvatar>
+            <img src={profileImage} className='rounded-full'></img>
+          </StyledAvatar>
           <div>
             <Link to={`./${title}`}>
               <h3>{title}</h3>
@@ -99,7 +103,15 @@ const ListItem = ({
           </div>
         </StyledEmail>
       </StyledListItem>
-      {/* <StyledAction
+    </StyledListItemContainer>
+  );
+};
+
+export default React.memo(ListItem);
+
+// ARCHIVE
+{
+  /* <StyledAction
         archiveAction
         width={actionWidth}
         as={animated.div}
@@ -129,9 +141,5 @@ const ListItem = ({
         >
           Delete
         </animated.div>
-      </StyledAction> */}
-    </StyledListItemContainer>
-  );
-};
-
-export default React.memo(ListItem);
+      </StyledAction> */
+}

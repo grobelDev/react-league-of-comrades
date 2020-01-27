@@ -12,8 +12,8 @@ export const StyledEmail = styled.div`
 
 export const StyledAvatar = styled.div`
   background-color: #f3f3f3;
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 3.5rem;
+  width: 3.5rem;
   border-radius: 10rem;
   display: flex;
   justify-content: center;

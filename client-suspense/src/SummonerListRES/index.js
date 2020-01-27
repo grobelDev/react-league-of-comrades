@@ -29,11 +29,14 @@ const SummonerListRES = props => {
       <ul ref={listRef}>
         {cellIds.map(id => {
           const isBeingDeleted = id === deletingId;
-          const { avatar, title, message } = cells[id % cells.length];
+          const { avatar, title, message, profileImage } = cells[
+            id % cells.length
+          ];
           return (
             <ListItem
               key={id}
               // deleteItem={deleteItem}
+              profileImage={profileImage}
               id={id}
               isBeingDeleted={isBeingDeleted}
               avatar={avatar}
