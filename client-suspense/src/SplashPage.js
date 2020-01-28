@@ -24,9 +24,9 @@ export default function SplashPage() {
             <div>
               <Link
                 className='text-blue-500 hover:text-blue-800'
-                to='na1/s8%20is%20so%20fun'
+                to='na1/BUZZLIGHTYEAR99'
               >
-                Tyler1 - (S8 IS SO FUN)
+                Tyler1 - (BUZZLIGHTYEAR99)
               </Link>
             </div>
             <div>
