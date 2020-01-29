@@ -19,7 +19,8 @@ const SummonerListRES = props => {
 
   return (
     <div className='relative w-full px-6 pt-5 pb-40 mx-auto max-w-screen-xl md:pb-24'>
-      <div className='-mx-6 xl:flex'>
+      <div className='-mx-6'>
+        {/* <div className='-mx-6 xl:flex'> */}
         <div className='max-w-2xl px-6 mx-auto text-left xl:text-left md:max-w-3xl'>
           <div>
             <StyledListItem className='p-4 text-2xl font-bold bg-gray-100'>
