@@ -132,7 +132,8 @@ function getPlayerDataFromMatch(name, match, championJSON, currentPatch) {
     currentPatch,
     championName
   );
-  let creepScore = playerStats.totalMinionsKilled;
+  let creepScore =
+    playerStats.totalMinionsKilled + playerStats.neutralMinionsKilled;
   let goldEarned = playerStats.goldEarned;
   let kills = playerStats.kills;
   let deaths = playerStats.deaths;

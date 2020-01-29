@@ -6,40 +6,7 @@ export default function SplashPage() {
     <div className='mt-16'>
       <div className='p-6 bg-white'>
         <Hero></Hero>
-        {/* <div className='font-medium'>STATUS: BETA</div>
-        <div>Welcome to League of Comrades.</div>
-        <div>
-          Use the Search Bar to look up how a Summoner plays with their
-          Comrades.
-        </div>
-        <div>Also, find detailed statistics from their most recent games.</div>
-        <div className='mt-4'>
-          <div>Here are some examples to get you started:</div>
-          <div>
-            <Link
-              className='text-blue-500 hover:text-blue-800'
-              to='/na1/Doublelift'
-            >
-              Doublelift - (Doublelift)
-            </Link>
-            <div>
-              <Link
-                className='text-blue-500 hover:text-blue-800'
-                to='na1/BUZZLIGHTYEAR99'
-              >
-                Tyler1 - (BUZZLIGHTYEAR99)
-              </Link>
-            </div>
-            <div>
-              <Link
-                className='text-blue-500 hover:text-blue-800'
-                to='/kr/hide%20on%20bush'
-              >
-                Faker - (Hide On Bush)
-              </Link>
-            </div>
-          </div>
-        </div> */}
+        {/* <ExampleImages></ExampleImages> */}
       </div>
     </div>
   );
@@ -98,3 +65,16 @@ function Hero() {
     </div>
   );
 }
+
+// function ExampleImages() {
+//   return (
+//     <div className='flex max-w-2xl'>
+//       <div className=''>
+//         <img src='https://cdn.discordapp.com/attachments/658629503387566090/672041748197015562/screenshot.png'></img>
+//       </div>
+//       <div>
+//         <img src='https://cdn.discordapp.com/attachments/658629503387566090/672041804622987264/screenshot.png'></img>
+//       </div>
+//     </div>
+//   );
+// }
