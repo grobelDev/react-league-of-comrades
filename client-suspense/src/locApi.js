@@ -75,7 +75,12 @@ function fetchComrades(userName, userRegion) {
   return new Promise(function(resolve, reject) {
     let url = 'https://server-nch7pipeyq-uc.a.run.app';
     let testUrl = 'http://localhost:8080';
-    let currentUrl = url;
+
+    let env = process.env.NODE_ENV || 'dev';
+
+    let currentUrl;
+
+    env === 'development' ? (currentUrl = testUrl) : (currentUrl = url);
 
     let fetchUrl = new URL(currentUrl),
       params = { name: userName, region: userRegion };

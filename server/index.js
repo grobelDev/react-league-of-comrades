@@ -7,15 +7,21 @@ const functions2 = require('./functions2.js');
 
 const app = express();
 
-var corsOptions = {
-  origin: 'https://leagueofcomrades.com',
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
+let env = process.env.NODE_ENV || 'development';
 
-app.use(cors(corsOptions));
+if (env === 'development') {
+  app.use(cors());
+} else {
+  var corsOptions = {
+    origin: 'https://leagueofcomrades.com',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  };
+
+  app.use(cors(corsOptions));
+}
 
 // app.use(cors());
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 
 // Express route handlers
 app.get('/', async (req, res) => {
