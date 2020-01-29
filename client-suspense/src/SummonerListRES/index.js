@@ -18,40 +18,46 @@ const SummonerListRES = props => {
   const collapseHandlerRef = React.useRef(null);
 
   return (
-    <div>
-      <StyledListItem className='p-4 text-2xl font-bold bg-gray-100'>
-        {name}
-        <div className='text-base font-normal'>
-          Data from the last {count} games.
-        </div>
-      </StyledListItem>
+    <div className='relative w-full px-6 pt-5 pb-40 mx-auto max-w-screen-xl md:pb-24'>
+      <div className='-mx-6 xl:flex'>
+        <div className='max-w-2xl px-6 mx-auto text-left xl:text-left md:max-w-3xl'>
+          <div>
+            <StyledListItem className='p-4 text-2xl font-bold bg-gray-100'>
+              {name}
+              <div className='text-base font-normal'>
+                Data from the last {count} games.
+              </div>
+            </StyledListItem>
 
-      <ul ref={listRef}>
-        {cellIds.map(id => {
-          const isBeingDeleted = id === deletingId;
-          const { avatar, title, message, profileImage } = cells[
-            id % cells.length
-          ];
-          return (
-            <ListItem
-              key={id}
-              // deleteItem={deleteItem}
-              profileImage={profileImage}
-              id={id}
-              isBeingDeleted={isBeingDeleted}
-              avatar={avatar}
-              title={title}
-              message={message}
-              name={name}
-              // region={region}
-            />
-          );
-        })}
-        <StyledCollapseHandler
-          ref={collapseHandlerRef}
-          exitDuration={exitDuration}
-        />
-      </ul>
+            <ul ref={listRef}>
+              {cellIds.map(id => {
+                const isBeingDeleted = id === deletingId;
+                const { avatar, title, message, profileImage } = cells[
+                  id % cells.length
+                ];
+                return (
+                  <ListItem
+                    key={id}
+                    // deleteItem={deleteItem}
+                    profileImage={profileImage}
+                    id={id}
+                    isBeingDeleted={isBeingDeleted}
+                    avatar={avatar}
+                    title={title}
+                    message={message}
+                    name={name}
+                    // region={region}
+                  />
+                );
+              })}
+              <StyledCollapseHandler
+                ref={collapseHandlerRef}
+                exitDuration={exitDuration}
+              />
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
