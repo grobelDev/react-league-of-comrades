@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, Suspense } from 'react';
 import styled from 'styled-components';
 
 const MatchHistory = props => {
@@ -151,11 +151,13 @@ function MatchWrapper({ name, comrade, match }) {
         <div className='flex justify-between px-2 pb-2 border-b border-gray-200 lg:px-3'>
           <div className='flex flex-col items-center justify-center mt-2 text-center big-picture'>
             <StyledAvatar>
-              <img
-                src={championImage}
-                className='rounded-full'
-                alt='champion image'
-              ></img>
+              <Suspense fallback={<div>L</div>}>
+                <img
+                  src={championImage}
+                  className='rounded-full'
+                  alt='champion image'
+                ></img>
+              </Suspense>
             </StyledAvatar>
             <div className='pt-3 text-sm'>{championName}</div>
           </div>
@@ -170,37 +172,39 @@ function MatchWrapper({ name, comrade, match }) {
           </div>
           <div className='flex justify-end '>
             <div className='flex flex-col justify-center'>
-              <div className='flex justify-between'>
-                <div className='flex flex-col'>
-                  <CustomStyledAvatarSquare>
-                    {item0 ? <img src={item0} alt='item 0'></img> : null}
-                  </CustomStyledAvatarSquare>
-                  <CustomStyledAvatarSquare>
-                    {item1 ? <img src={item1} alt='item 1'></img> : null}
-                  </CustomStyledAvatarSquare>
+              <Suspense fallback={<div>Loading...</div>}>
+                <div className='flex justify-between'>
+                  <div className='flex flex-col'>
+                    <CustomStyledAvatarSquare>
+                      {item0 ? <img src={item0} alt='item 0'></img> : null}
+                    </CustomStyledAvatarSquare>
+                    <CustomStyledAvatarSquare>
+                      {item1 ? <img src={item1} alt='item 1'></img> : null}
+                    </CustomStyledAvatarSquare>
+                  </div>
+                  <div className='flex flex-col'>
+                    <CustomStyledAvatarSquare>
+                      {item2 ? <img src={item2} alt='item 2'></img> : null}
+                    </CustomStyledAvatarSquare>
+                    <CustomStyledAvatarSquare>
+                      {item3 ? <img src={item3} alt='item 3'></img> : null}
+                    </CustomStyledAvatarSquare>
+                  </div>
+                  <div className='flex flex-col'>
+                    <CustomStyledAvatarSquare>
+                      {item4 ? <img src={item4} alt='item 4'></img> : null}
+                    </CustomStyledAvatarSquare>
+                    <CustomStyledAvatarSquare>
+                      {item5 ? <img src={item5} alt='item 5'></img> : null}
+                    </CustomStyledAvatarSquare>
+                  </div>
+                  <div className='flex flex-col justify-center'>
+                    <CustomStyledAvatarSquare>
+                      {item6 ? <img src={item6} alt='item 6'></img> : null}
+                    </CustomStyledAvatarSquare>
+                  </div>
                 </div>
-                <div className='flex flex-col'>
-                  <CustomStyledAvatarSquare>
-                    {item2 ? <img src={item2} alt='item 2'></img> : null}
-                  </CustomStyledAvatarSquare>
-                  <CustomStyledAvatarSquare>
-                    {item3 ? <img src={item3} alt='item 3'></img> : null}
-                  </CustomStyledAvatarSquare>
-                </div>
-                <div className='flex flex-col'>
-                  <CustomStyledAvatarSquare>
-                    {item4 ? <img src={item4} alt='item 4'></img> : null}
-                  </CustomStyledAvatarSquare>
-                  <CustomStyledAvatarSquare>
-                    {item5 ? <img src={item5} alt='item 5'></img> : null}
-                  </CustomStyledAvatarSquare>
-                </div>
-                <div className='flex flex-col justify-center'>
-                  <CustomStyledAvatarSquare>
-                    {item6 ? <img src={item6} alt='item 6'></img> : null}
-                  </CustomStyledAvatarSquare>
-                </div>
-              </div>
+              </Suspense>
             </div>
           </div>
         </div>

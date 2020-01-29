@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, Suspense } from 'react';
 import {
   StyledAction,
   StyledListItem,
@@ -93,11 +93,13 @@ const ListItem = ({
           {/* <StyledAvatar>{avatar}</StyledAvatar> */}
           <StyledAvatar>
             <Link to={`./${title}`}>
-              <img
-                src={profileImage}
-                className='rounded-full'
-                alt='profile image'
-              ></img>
+              <Suspense fallback={<div>I</div>}>
+                <img
+                  src={profileImage}
+                  className='rounded-full'
+                  alt='profile image'
+                ></img>
+              </Suspense>
             </Link>
           </StyledAvatar>
           <div>
@@ -105,7 +107,6 @@ const ListItem = ({
               <h3>{title}</h3>
             </Link>
             <div>{message}</div>
-            {/* <Link to={`./${title}`}>{title} Profile</Link> */}
           </div>
         </StyledEmail>
       </StyledListItem>
