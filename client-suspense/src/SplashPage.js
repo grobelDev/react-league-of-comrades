@@ -65,6 +65,7 @@ function Hero() {
             role='alert'
           >
             <p class='font-bold'>The website is currently in BETA.</p>
+            <p>Match history is currently limited to 2 matches.</p>
             <p>More matches and features are coming soon!</p>
           </div>
         </div>
