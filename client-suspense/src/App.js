@@ -1,4 +1,10 @@
-import React, { useState, useTransition, Suspense, useEffect } from 'react';
+import React, {
+  useState,
+  useTransition,
+  Suspense,
+  useEffect,
+  Component
+} from 'react';
 import { fetchUserDataV2 } from './locApi';
 import styled from 'styled-components';
 import {
@@ -41,12 +47,12 @@ function App(props) {
     setResource(props.resource);
   }, [props]);
 
-  useEffect(() => {
-    (window.adsbygoogle = window.adsbygoogle || []).push({
-      google_ad_client: 'ca-pub-4384219248126340',
-      enable_page_level_ads: true
-    });
-  }, []);
+  // useEffect(() => {
+  //   (window.adsbygoogle = window.adsbygoogle || []).push({
+  //     google_ad_client: 'ca-pub-4384219248126340',
+  //     enable_page_level_ads: true
+  //   });
+  // }, []);
 
   // hooks
   // let UserMatch = useRouteMatch('/:region/:name');
@@ -85,6 +91,8 @@ function App(props) {
 
   return (
     <div>
+      <Header />
+
       <Switch>
         <Route
           path='/'
@@ -92,12 +100,11 @@ function App(props) {
           render={() => {
             return (
               <div>
-                <Header />
                 <div className='mt-16'>
                   <SplashPage></SplashPage>
-                  {/* <SummonerListRESWrapper
+                  <SummonerListRESWrapper
                     resource={resource}
-                  ></SummonerListRESWrapper> */}
+                  ></SummonerListRESWrapper>
                   {/* <MatchHistoryRESWrapper
                     resource={resource}
                   ></MatchHistoryRESWrapper> */}
@@ -112,7 +119,6 @@ function App(props) {
           component={() => {
             return (
               <div>
-                <Header />
                 <div className='mt-16'>
                   <SummonerListRESWrapper
                     resource={resource}
@@ -127,7 +133,6 @@ function App(props) {
           component={() => {
             return (
               <div>
-                <Header />
                 <div className='mt-16'>
                   <MatchHistoryRESWrapper
                     resource={resource}
@@ -155,6 +160,33 @@ function App(props) {
 
 export default App;
 
+class GoogleAdSense extends Component {
+  componentDidMount() {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  }
+
+  render() {
+    const { showAd, className, slot, format } = this.props;
+
+    return (
+      <div className='GoogleAdSense'>
+        <ins
+          className={`adsbygoogle ${className}`}
+          style={{ display: 'block' }}
+          data-ad-client='ca-pub-4384219248126340'
+          data-ad-slot={slot}
+          data-ad-format={format}
+        ></ins>
+      </div>
+    );
+  }
+}
+// useEffect(() => {
+//   (window.adsbygoogle = window.adsbygoogle || []).push({
+//     google_ad_client: 'ca-pub-4384219248126340',
+//     enable_page_level_ads: true
+//   });
+// }, []);
 // function SummonerListWrapper({ resource }) {
 //   return (
 //     <ErrorBoundary

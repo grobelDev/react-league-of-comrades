@@ -21,8 +21,17 @@ export default function AppWrapper() {
       resourceCache[name] = resource;
     }
   } else {
-    resource = fetchUserDataV2('Doublelift', 'na1');
-    resourceCache['Doublelift'] = resource;
+    let defaultName = 'Doublelift';
+
+    if (resourceCache[defaultName]) {
+      resource = resourceCache[defaultName];
+    } else {
+      resource = fetchUserDataV2(defaultName, 'na1');
+      resourceCache[defaultName] = resource;
+    }
+
+    // resource = fetchUserDataV2('Doublelift', 'na1');
+    // resourceCache['Doublelift'] = resource;
   }
 
   return <App resource={resource}></App>;

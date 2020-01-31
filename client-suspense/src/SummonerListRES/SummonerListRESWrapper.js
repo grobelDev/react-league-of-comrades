@@ -42,6 +42,7 @@ export default function SummonerListRESWrapper({ resource }) {
 
 function SummonerListRESDetails({ resource }) {
   let data = resource.results.read();
+  let region = resource.region;
 
   // computed values
   let name = data.userName;
@@ -58,6 +59,7 @@ function SummonerListRESDetails({ resource }) {
         count={count}
         cellIds={cellIds}
         cells={cells}
+        region={region}
       ></SummonerListRES>
     </Fragment>
   );

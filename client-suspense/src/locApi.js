@@ -12,6 +12,8 @@ export function fetchUserDataV2(userName, userRegion) {
   return {
     // userName,
     // userRegion,
+    name: userName,
+    region: userRegion,
     results: wrapPromise(comradesPromise)
   };
 }

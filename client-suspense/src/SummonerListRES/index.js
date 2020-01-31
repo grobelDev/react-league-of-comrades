@@ -47,7 +47,7 @@ const SummonerListRES = props => {
                     title={title}
                     message={message}
                     name={name}
-                    // region={region}
+                    region={props.region}
                   />
                 );
               })}

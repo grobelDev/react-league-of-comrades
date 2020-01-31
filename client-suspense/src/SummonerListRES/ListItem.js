@@ -36,7 +36,8 @@ const ListItem = ({
   id,
   isBeingDeleted,
   name,
-  profileImage
+  profileImage,
+  region
 }) => {
   const itemRef = useRef(null);
   const stops = useRef(null);
@@ -92,7 +93,7 @@ const ListItem = ({
         <StyledEmail>
           {/* <StyledAvatar>{avatar}</StyledAvatar> */}
           <StyledAvatar>
-            <Link to={`./${title}`}>
+            <Link to={`/${region}/${title}/`}>
               <Suspense fallback={<div>I</div>}>
                 <img
                   src={profileImage}
@@ -103,7 +104,7 @@ const ListItem = ({
             </Link>
           </StyledAvatar>
           <div>
-            <Link to={`./${name}/${title}`}>
+            <Link to={`/${region}/${name}/${title}`}>
               <h3>{title}</h3>
             </Link>
             <div>{message}</div>

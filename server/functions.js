@@ -58,6 +58,7 @@ async function mainV3(summonerName, region) {
     let results = {
       userName: trueSummonerName,
       profileImage: profileImage,
+      region: region,
       gameCount: gameCount,
       currentPatch: currentPatch,
       playerData: filteredSummonerArray
