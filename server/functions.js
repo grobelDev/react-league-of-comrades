@@ -41,7 +41,7 @@ async function mainV3(summonerName, region) {
     let summonerArray = organizePlayerObject(currentPatch, matchIdArray);
 
     let decodedName = decodeURIComponent(summonerName);
-
+    console.log(summonerArray);
     let trueSummonerName = summonerArray.find(
       summoner => summoner.name.toLowerCase() === decodedName.toLowerCase()
     ).name;

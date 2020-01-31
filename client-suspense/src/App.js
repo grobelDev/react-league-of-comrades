@@ -30,16 +30,24 @@ function App(props) {
   const [resource, setResource] = useState(props.resource);
   const [resourceStore, setResourceStore] = useState({});
   const [transitionResource, setTransitionResource] = useState(null);
-  const [startTransition, isPending] = useTransition({
-    // Wait 10 seconds before fallback
-    timeoutMs: 500
-  });
+  // const [startTransition, isPending] = useTransition({
+  //   // Wait 10 seconds before fallback
+  //   timeoutMs: 1000
+  // });
 
   // console.log('app:', props.resource);
 
   useEffect(() => {
     setResource(props.resource);
   }, [props]);
+
+  useEffect(() => {
+    (window.adsbygoogle = window.adsbygoogle || []).push({
+      google_ad_client: 'ca-pub-4384219248126340',
+      enable_page_level_ads: true
+    });
+  }, []);
+
   // hooks
   // let UserMatch = useRouteMatch('/:region/:name');
   // let location = useLocation();

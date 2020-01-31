@@ -28,7 +28,6 @@ app.get('/', async (req, res) => {
   // console.log(req);
   let name = req.query.name;
   let region = req.query.region;
-  // console.log(name, region);
   // console.log(typeof result);
   // console.log(decodeURIComponent(summonerName));
 
