@@ -92,7 +92,6 @@ function App(props) {
   return (
     <div>
       <Header />
-
       <Switch>
         <Route
           path='/'
@@ -102,6 +101,7 @@ function App(props) {
               <div>
                 <div className='mt-16'>
                   <SplashPage></SplashPage>
+
                   <SummonerListRESWrapper
                     resource={resource}
                   ></SummonerListRESWrapper>

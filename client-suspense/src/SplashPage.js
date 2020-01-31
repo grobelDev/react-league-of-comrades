@@ -60,6 +60,13 @@ function Hero() {
             </button>
             {/* onClick={()=>scrollToRef(myRef) */}
           </div>
+          <div
+            class='mt-10 bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4'
+            role='alert'
+          >
+            <p class='font-bold'>The website is currently in BETA.</p>
+            <p>More matches and features are coming soon!</p>
+          </div>
         </div>
       </div>
     </div>
