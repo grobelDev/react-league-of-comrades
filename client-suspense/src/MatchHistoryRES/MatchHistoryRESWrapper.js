@@ -23,11 +23,11 @@ export default function MatchHistoryRESWrapper({ resource }) {
             changed their name recently. <br />
             <br />
             {
-              <Link className='text-blue-500' to={`./`}>
+              <Link className='text-blue-500' to={`/`}>
                 Click here
               </Link>
             }{' '}
-            to go back to the Player's page.
+            to go back to the Home Page.
             <br />
             <br /> Thanks for using the website!
           </div>

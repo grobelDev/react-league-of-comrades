@@ -18,11 +18,11 @@ export default function SummonerListRESWrapper({ resource }) {
             changed their name recently. <br />
             <br />
             {
-              <Link className='text-blue-500' to={`../`}>
+              <Link className='text-blue-500' to={`/`}>
                 Click here
               </Link>
             }{' '}
-            to go back to the homepage. <br /> Thanks for using the website!
+            to go back to the Home Page. <br /> Thanks for using the website!
           </div>
         }
       >
