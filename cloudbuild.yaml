@@ -4,20 +4,10 @@ steps:
   #   args: ['build', '-t', 'gcr.io/$PROJECT_ID/client', './client']
   - name: 'gcr.io/cloud-builders/docker'
     args:
-      [
-        'build',
-        '-t',
-        'gcr.io/$PROJECT_ID/leagueofcomrades-client',
-        './leagueofcomrades-client',
-      ]
+      ['build', '-t', 'gcr.io/$PROJECT_ID/leagueofcomrades-client', './client']
   - name: 'gcr.io/cloud-builders/docker'
     args:
-      [
-        'build',
-        '-t',
-        'gcr.io/$PROJECT_ID/leagueofcomrades-server',
-        './leagueofcomrades-server',
-      ]
+      ['build', '-t', 'gcr.io/$PROJECT_ID/leagueofcomrades-server', './server']
 
     # push the container images to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
