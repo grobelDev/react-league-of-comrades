@@ -3,15 +3,27 @@ steps:
   # - name: 'gcr.io/cloud-builders/docker'
   #   args: ['build', '-t', 'gcr.io/$PROJECT_ID/client', './client']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/client', './client-suspense']
+    args:
+      [
+        'build',
+        '-t',
+        'gcr.io/$PROJECT_ID/client-leagueofcomrades',
+        './client-leagueofcomrades',
+      ]
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/$PROJECT_ID/server', './server']
+    args:
+      [
+        'build',
+        '-t',
+        'gcr.io/$PROJECT_ID/server-leagueofcomrades',
+        './server-leagueofcomrades',
+      ]
 
     # push the container images to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/client']
+    args: ['push', 'gcr.io/$PROJECT_ID/client-leagueofcomrades']
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/server']
+    args: ['push', 'gcr.io/$PROJECT_ID/server-leagueofcomrades']
 
     # Deploy container images to Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -19,9 +31,9 @@ steps:
       [
         'run',
         'deploy',
-        'client',
+        'client-leagueofcomrades',
         '--image',
-        'gcr.io/$PROJECT_ID/client',
+        'gcr.io/$PROJECT_ID/client-leagueofcomrades',
         '--region',
         'us-central1',
         '--platform',
@@ -34,15 +46,16 @@ steps:
       [
         'run',
         'deploy',
-        'server',
+        'server-leagueofcomrades',
         '--image',
-        'gcr.io/$PROJECT_ID/server',
+        'gcr.io/$PROJECT_ID/server-leagueofcomrades',
         '--region',
         'us-central1',
         '--platform',
         'managed',
         '--quiet',
+        '--allow-unauthenticated',
       ]
 images:
-  - gcr.io/$PROJECT_ID/client
-  - gcr.io/$PROJECT_ID/server
+  - gcr.io/$PROJECT_ID/client-leagueofcomrades
+  - gcr.io/$PROJECT_ID/server-leagueofcomrades
