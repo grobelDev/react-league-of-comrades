@@ -12,7 +12,7 @@ let env = process.env.NODE_ENV || 'development';
 if (env === 'development') {
   app.use(cors());
 } else {
-  var corsOptions = {
+  let corsOptions = {
     origin: 'https://leagueofcomrades.com',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   };
