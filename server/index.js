@@ -9,17 +9,18 @@ const app = express();
 
 let env = process.env.NODE_ENV || 'development';
 
-if (env === 'development') {
-  app.use(cors());
-} else {
-  let corsOptions = {
-    origin: 'https://leagueofcomrades.com',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-  };
+// if (env === 'development') {
+//   app.use(cors());
+// } else {
+//   let corsOptions = {
+//     origin: 'https://leagueofcomrades.com',
+//     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+//   };
 
-  app.use(cors(corsOptions));
-}
+//   app.use(cors(corsOptions));
+// }
 
+app.use(cors());
 // app.use(cors());
 // app.use(bodyParser.json());
 
