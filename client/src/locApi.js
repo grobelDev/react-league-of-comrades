@@ -75,7 +75,7 @@ function wrapPromise(promise) {
 
 function fetchComrades(userName, userRegion) {
   return new Promise(function(resolve, reject) {
-    let url = 'https://whenshouldileave-server-zxc6fpw5uq-uc.a.run.app';
+    let url = 'https://leagueofcomrades-server-zxc6fpw5uq-uc.a.run.app';
     let testUrl = 'http://localhost:8080';
 
     // let currentUrl = url;
